@@ -324,6 +324,11 @@
 			},
 			"SchoolApplicantListExtraData": {
 				"properties": {
+					"is_published": {
+						"type": "boolean",
+						"description": "Indicates if the registration is published",
+						"example": false
+					},
 					"is_registration_ended": {
 						"type": "boolean",
 						"description": "Indicates if the registration has ended",
@@ -331,6 +336,7 @@
 					}
 				},
 				"required": [
+					"is_published",
 					"is_registration_ended"
 				],
 				"type": "object"
@@ -2684,7 +2690,8 @@
 												}
 											],
 											"extra_data": {
-												"is_registration_ended": false
+												"is_registration_ended": false,
+												"is_published": false
 											}
 										}
 									}
