@@ -255,7 +255,7 @@
 				"additionalProperties": false
 			},
 			"SchoolLevel": {
-				"description": "Enum representing different school levels.\n0 = Elementary School, 1 = Middle School, 2 = High School",
+				"description": "Enum representing different school levels.\r\n0 = Elementary School, 1 = Middle School, 2 = High School",
 				"enum": [
 					"0",
 					"1",
@@ -393,7 +393,7 @@
 				"additionalProperties": false
 			},
 			"RegistrationType": {
-				"description": "Enum representing different types of registration.\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom",
+				"description": "Enum representing different types of registration.\r\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom",
 				"enum": [
 					"0",
 					"1",
@@ -438,7 +438,7 @@
 									"type": "string"
 								},
 								"type": "array",
-								"description": "Error message key if the registration type still has drafted applicants or the registration type has not ended. <br>\n**Posible values:** `registration_type_still_has_drafted_applicants` or `registration_type_not_ended`",
+								"description": "Error message key if the registration type still has drafted applicants or the registration type has not ended. <br>\r\n**Posible values:** `registration_type_still_has_drafted_applicants` or `registration_type_not_ended`",
 								"example": [
 									"registration_type_still_has_drafted_applicants"
 								]
@@ -482,7 +482,7 @@
 				"properties": {
 					"registration_type": {
 						"$ref": "#/components/schemas/RegistrationType",
-						"description": "Registration type to publish final result for <br>\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom"
+						"description": "Registration type to publish final result for <br>\r\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom"
 					}
 				},
 				"required": [
@@ -789,6 +789,390 @@
 				],
 				"type": "object"
 			},
+			"AttendanceStatusEnum": {
+				"enum": [
+					"present",
+					"leave",
+					"sick",
+					"alpha"
+				],
+				"type": "string"
+			},
+			"AttendanceTrackingDaily": {
+				"properties": {
+					"attendance_status": {
+						"$ref": "#/components/schemas/AttendanceStatusEnum"
+					},
+					"date": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"attendance_status",
+					"date",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttendanceTrackingExtraData": {
+				"properties": {
+					"student": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"not_present_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"present_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"alpha": {
+						"type": "number",
+						"format": "double"
+					},
+					"sick": {
+						"type": "number",
+						"format": "double"
+					},
+					"leave": {
+						"type": "number",
+						"format": "double"
+					},
+					"present": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"student",
+					"not_present_percentage",
+					"present_percentage",
+					"alpha",
+					"sick",
+					"leave",
+					"present"
+				],
+				"type": "object"
+			},
+			"AttendanceTrackingSubject": {
+				"properties": {
+					"attendance_status": {
+						"$ref": "#/components/schemas/AttendanceStatusEnum"
+					},
+					"subject": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"attendance_status",
+					"subject",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttendanceReport": {
+				"properties": {
+					"daily_attendance_rate": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"section_name": {
+						"type": "string"
+					},
+					"section_id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"daily_attendance_rate",
+					"section_name",
+					"section_id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_AttendanceReport_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/AttendanceReport"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_AttendanceReport.section_id-or-daily_attendance_rate_": {
+				"properties": {
+					"section_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"daily_attendance_rate": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"section_id",
+					"daily_attendance_rate"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"AttendanceReportStudent": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Pick_AttendanceReport.section_id-or-daily_attendance_rate_"
+					},
+					{
+						"properties": {
+							"name": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"name"
+						],
+						"type": "object"
+					}
+				]
+			},
+			"PaginatedResponseEnvelope_AttendanceReportStudent_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/AttendanceReportStudent"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_AcademicYear.Exclude_keyofAcademicYear.is_published__": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"year": {
+						"type": "string"
+					},
+					"start_date": {
+						"type": "string"
+					},
+					"end_date": {
+						"type": "string"
+					},
+					"semester1_start_date": {
+						"type": "string"
+					},
+					"semester2_start_date": {
+						"type": "string"
+					},
+					"semester1_end_date": {
+						"type": "string"
+					},
+					"semester2_end_date": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"year",
+					"start_date",
+					"end_date",
+					"semester1_start_date",
+					"semester2_start_date",
+					"semester1_end_date",
+					"semester2_end_date"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_AcademicYear.is_published_": {
+				"$ref": "#/components/schemas/Pick_AcademicYear.Exclude_keyofAcademicYear.is_published__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"AttendanceReportDetail": {
+				"properties": {
+					"semester": {
+						"type": "number",
+						"format": "double"
+					},
+					"academic_year": {
+						"$ref": "#/components/schemas/Omit_AcademicYear.is_published_"
+					},
+					"course": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"section": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"semester",
+					"academic_year",
+					"course",
+					"section"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_AttendanceReportDetail_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/AttendanceReportDetail"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"RegistrationPathParameterType": {
 				"enum": [
 					"total_nilai",
@@ -813,7 +1197,7 @@
 							"$ref": "#/components/schemas/RegistrationType"
 						},
 						"type": "array",
-						"description": "Array of Enum representing different types of registration.\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom"
+						"description": "Array of Enum representing different types of registration.\r\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom"
 					}
 				},
 				"required": [
@@ -1086,7 +1470,7 @@
 								},
 								"field_type": {
 									"$ref": "#/components/schemas/RegistrationPathFieldType",
-									"description": "Field type\n0 = Text, 1 = Number, 2 = Choice, 3 = Multiple Choice, 4 = Date, 5 = Document"
+									"description": "Field type\r\n0 = Text, 1 = Number, 2 = Choice, 3 = Multiple Choice, 4 = Date, 5 = Document"
 								},
 								"is_required": {
 									"type": "boolean",
@@ -1161,7 +1545,7 @@
 							"properties": {
 								"billing_schedule_type": {
 									"$ref": "#/components/schemas/RegistrationPathBillingScheduleType",
-									"description": "When the payment should be made.\n0 = Pay at registration, 1 = Pay after acceptance"
+									"description": "When the payment should be made.\r\n0 = Pay at registration, 1 = Pay after acceptance"
 								},
 								"price": {
 									"type": "number",
@@ -1557,7 +1941,7 @@
 				"additionalProperties": false
 			},
 			"RegistrationInformationDetailType": {
-				"description": "Enum representing different types of registration information details.\n0 = Requirement, 1 = Flow, 2 = Schedule, 3 = School",
+				"description": "Enum representing different types of registration information details.\r\n0 = Requirement, 1 = Flow, 2 = Schedule, 3 = School",
 				"enum": [
 					"0",
 					"1",
@@ -2322,6 +2706,54 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"GetDetailUser": {
+				"properties": {
+					"last_name": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"last_name",
+					"first_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_GetDetailUser_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/GetDetailUser"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"buffer.File": {
 				"description": "Provides information about files and allows JavaScript in a web page to access their content.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/File)\n`File` class is a global reference for `import { File } from 'node:buffer'`\nhttps://nodejs.org/api/buffer.html#class-file",
 				"properties": {},
@@ -2797,7 +3229,7 @@
 						}
 					}
 				},
-				"description": "Publishes the final results for applicants of a specific registration type.<br>\nThis API **can only be used when the registration period has ended and there are no applicants in draft status**. If either condition is not met, the API will return an error.",
+				"description": "Publishes the final results for applicants of a specific registration type.<br>\r\nThis API **can only be used when the registration period has ended and there are no applicants in draft status**. If either condition is not met, the API will return an error.",
 				"summary": "Publish final result of the applicants",
 				"tags": [
 					"School Applicant"
@@ -2832,7 +3264,7 @@
 						}
 					}
 				},
-				"description": "Exports the final result of the applicants for a specific registration type.<br>\n**Response will be a file in `.xls` format.**",
+				"description": "Exports the final result of the applicants for a specific registration type.<br>\r\n**Response will be a file in `.xls` format.**",
 				"summary": "Export final result of the applicants",
 				"tags": [
 					"School Applicant"
@@ -3054,6 +3486,510 @@
 				]
 			}
 		},
+		"/v2/report/attendance-tracking/daily": {
+			"get": {
+				"operationId": "GetAttendanceTrackingDaily",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"extra_data": {
+											"$ref": "#/components/schemas/AttendanceTrackingExtraData"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/AttendanceTrackingDaily"
+											},
+											"type": "array"
+										},
+										"previous": {
+											"type": "string"
+										},
+										"next": {
+											"type": "string"
+										},
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"message": {
+											"type": "string"
+										},
+										"error": {
+											"type": "boolean"
+										},
+										"code": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"extra_data",
+										"data",
+										"previous",
+										"next",
+										"count",
+										"message",
+										"error",
+										"code"
+									],
+									"type": "object"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"date": "2025-01-01",
+													"attendance_status": "present"
+												}
+											],
+											"extra_data": {
+												"present": 10,
+												"leave": 5,
+												"sick": 3,
+												"alpha": 2,
+												"not_present_percentage": 33.33,
+												"present_percentage": 66.67,
+												"student": {
+													"id": 1,
+													"name": "John Doe"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Attendance Tracking Daily paginated",
+				"summary": "Get all attendance tracking daily",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Start date",
+						"in": "query",
+						"name": "start_date",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "End date",
+						"in": "query",
+						"name": "end_date",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v2/report/attendance-tracking/subject": {
+			"get": {
+				"operationId": "GetAttendanceTrackingSubject",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"extra_data": {
+											"$ref": "#/components/schemas/AttendanceTrackingExtraData"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/AttendanceTrackingSubject"
+											},
+											"type": "array"
+										},
+										"previous": {
+											"type": "string"
+										},
+										"next": {
+											"type": "string"
+										},
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"message": {
+											"type": "string"
+										},
+										"error": {
+											"type": "boolean"
+										},
+										"code": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"extra_data",
+										"data",
+										"previous",
+										"next",
+										"count",
+										"message",
+										"error",
+										"code"
+									],
+									"type": "object"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"subject": "Math",
+													"attendance_status": "present"
+												}
+											],
+											"extra_data": {
+												"present": 10,
+												"leave": 5,
+												"sick": 3,
+												"alpha": 2,
+												"not_present_percentage": 33.33,
+												"present_percentage": 66.67,
+												"student": {
+													"id": 1,
+													"name": "John Doe"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Attendance Tracking Subject paginated",
+				"summary": "Get all attendance tracking subject",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Date",
+						"in": "query",
+						"name": "date",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v2/report/attendance-report": {
+			"get": {
+				"operationId": "GetAttendanceReport",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_AttendanceReport_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"section_id": 1,
+													"section_name": "Kelas 7A",
+													"daily_attendance_rate": 90
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Attendance Report paginated",
+				"summary": "Get all attendance report",
+				"tags": [
+					"Attendance Report"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "academic_year_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "semester",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "course_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/report/attendance-report/student": {
+			"get": {
+				"operationId": "GetAttendanceReportStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_AttendanceReportStudent_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"section_id": 1,
+													"name": "Alya Putri",
+													"daily_attendance_rate": 98
+												},
+												{
+													"section_id": 2,
+													"name": "Faizgagah",
+													"daily_attendance_rate": 98
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get Attendance Report Student paginated",
+				"summary": "Get attendance report student",
+				"tags": [
+					"Attendance Report"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Section id (required)",
+						"in": "query",
+						"name": "section_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/report/attendance-report/{id}": {
+			"get": {
+				"operationId": "GetAttendanceReportDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_AttendanceReportDetail_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": {
+												"section": {
+													"id": 1,
+													"name": "A"
+												},
+												"course": {
+													"id": 1,
+													"name": "Kelas 7"
+												},
+												"academic_year": {
+													"id": 1,
+													"year": "2021-2022",
+													"start_date": "2021-01-01",
+													"end_date": "2021-12-31",
+													"semester1_start_date": "2021-01-01",
+													"semester1_end_date": "2021-06-30",
+													"semester2_start_date": "2021-07-01",
+													"semester2_end_date": "2021-12-31"
+												},
+												"semester": 1
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get Detail Attendance Report",
+				"summary": "Get detail attendance report",
+				"tags": [
+					"Attendance Report"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Attendance report id",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/v2/ppdb/registration-paths/parameter": {
 			"get": {
 				"operationId": "GetRegistrationPathParameter",
@@ -3115,7 +4051,7 @@
 						}
 					}
 				},
-				"description": "Get registration path calculation parameter that is used to calculate applicant priority based on their registration path type.\nThe order of the `params` items is important because it determines the order of the parameters in the calculation.",
+				"description": "Get registration path calculation parameter that is used to calculate applicant priority based on their registration path type.\r\nThe order of the `params` items is important because it determines the order of the parameters in the calculation.",
 				"summary": "Get registration path calculation parameter",
 				"tags": [
 					"Registration Path Parameter"
@@ -3183,7 +4119,7 @@
 						}
 					}
 				},
-				"description": "Update registration path calculation parameter that is used to calculate applicant priority based on their registration path type.\nThe order of the `params` items is important because it determines the order of the parameters in the calculation.",
+				"description": "Update registration path calculation parameter that is used to calculate applicant priority based on their registration path type.\r\nThe order of the `params` items is important because it determines the order of the parameters in the calculation.",
 				"summary": "Update registration path calculation parameter",
 				"tags": [
 					"Registration Path Parameter"
@@ -4845,6 +5781,55 @@
 						}
 					}
 				}
+			}
+		},
+		"/v2/auth/user/{id}": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_GetDetailUser_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"first_name": "John",
+												"last_name": "Doe"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get user detail",
+				"summary": "Get user detail by id",
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "User id",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/v2/ppdb/announcements": {
