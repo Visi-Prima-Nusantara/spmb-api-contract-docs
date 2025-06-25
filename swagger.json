@@ -964,41 +964,26 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_AttendanceReport.section_id-or-daily_attendance_rate_": {
+			"AttendanceReportStudent": {
 				"properties": {
-					"section_id": {
-						"type": "number",
-						"format": "double"
-					},
 					"daily_attendance_rate": {
 						"type": "number",
 						"format": "double"
+					},
+					"student_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"student_name": {
+						"type": "string"
 					}
 				},
 				"required": [
-					"section_id",
-					"daily_attendance_rate"
+					"daily_attendance_rate",
+					"student_id",
+					"student_name"
 				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"AttendanceReportStudent": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Pick_AttendanceReport.section_id-or-daily_attendance_rate_"
-					},
-					{
-						"properties": {
-							"name": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"name"
-						],
-						"type": "object"
-					}
-				]
+				"type": "object"
 			},
 			"PaginatedResponseEnvelope_AttendanceReportStudent_": {
 				"properties": {
@@ -1056,7 +1041,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"year": {
+					"academic_year": {
 						"type": "string"
 					},
 					"start_date": {
@@ -1080,7 +1065,7 @@
 				},
 				"required": [
 					"id",
-					"year",
+					"academic_year",
 					"start_date",
 					"end_date",
 					"semester1_start_date",
@@ -1099,7 +1084,8 @@
 				"properties": {
 					"semester": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					},
 					"academic_year": {
 						"$ref": "#/components/schemas/Omit_AcademicYear.is_published_"
@@ -3751,7 +3737,7 @@
 				]
 			}
 		},
-		"/v2/report/attendance-report": {
+		"/v2/attendance-tracking/attendance-report/section": {
 			"get": {
 				"operationId": "GetAttendanceReport",
 				"responses": {
@@ -3788,7 +3774,7 @@
 				"description": "Get All Attendance Report paginated",
 				"summary": "Get all attendance report",
 				"tags": [
-					"Attendance Report"
+					"Attendance Tracking"
 				],
 				"security": [],
 				"parameters": [
@@ -3844,7 +3830,7 @@
 				]
 			}
 		},
-		"/v2/report/attendance-report/student": {
+		"/v2/attendance-tracking/attendance-report/section/{id}/student": {
 			"get": {
 				"operationId": "GetAttendanceReportStudent",
 				"responses": {
@@ -3866,13 +3852,13 @@
 											"previous": "",
 											"data": [
 												{
-													"section_id": 1,
-													"name": "Alya Putri",
+													"student_id": 1,
+													"student_name": "Alya Putri",
 													"daily_attendance_rate": 98
 												},
 												{
-													"section_id": 2,
-													"name": "Faizgagah",
+													"student_id": 2,
+													"student_name": "Faizgagah",
 													"daily_attendance_rate": 98
 												}
 											]
@@ -3886,7 +3872,7 @@
 				"description": "Get Attendance Report Student paginated",
 				"summary": "Get attendance report student",
 				"tags": [
-					"Attendance Report"
+					"Attendance Tracking"
 				],
 				"security": [],
 				"parameters": [
@@ -3925,7 +3911,7 @@
 				]
 			}
 		},
-		"/v2/report/attendance-report/{id}": {
+		"/v2/attendance-tracking/attendance-report/section/{id}/title": {
 			"get": {
 				"operationId": "GetAttendanceReportDetail",
 				"responses": {
@@ -3953,7 +3939,7 @@
 												},
 												"academic_year": {
 													"id": 1,
-													"year": "2021-2022",
+													"academic_year": "2021-2022",
 													"start_date": "2021-01-01",
 													"end_date": "2021-12-31",
 													"semester1_start_date": "2021-01-01",
@@ -3973,7 +3959,7 @@
 				"description": "Get Detail Attendance Report",
 				"summary": "Get detail attendance report",
 				"tags": [
-					"Attendance Report"
+					"Attendance Tracking"
 				],
 				"security": [],
 				"parameters": [
@@ -3982,6 +3968,15 @@
 						"in": "path",
 						"name": "id",
 						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "semester",
+						"required": false,
 						"schema": {
 							"format": "double",
 							"type": "number"
