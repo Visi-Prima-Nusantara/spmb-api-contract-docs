@@ -791,16 +791,16 @@
 			},
 			"AttendanceStatusEnum": {
 				"enum": [
-					"present",
-					"leave",
-					"sick",
-					"alpha"
+					"Present",
+					"Leave",
+					"Sick",
+					"Absent"
 				],
 				"type": "string"
 			},
 			"AttendanceTrackingDaily": {
 				"properties": {
-					"attendance_status": {
+					"status": {
 						"$ref": "#/components/schemas/AttendanceStatusEnum"
 					},
 					"date": {
@@ -812,7 +812,7 @@
 					}
 				},
 				"required": [
-					"attendance_status",
+					"status",
 					"date",
 					"id"
 				],
@@ -820,7 +820,42 @@
 			},
 			"AttendanceTrackingExtraData": {
 				"properties": {
-					"student": {
+					"not_present_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"absent_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"sick_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"leave_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"present_percentage": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"not_present_percentage",
+					"absent_percentage",
+					"sick_percentage",
+					"leave_percentage",
+					"present_percentage"
+				],
+				"type": "object"
+			},
+			"AttendanceTrackingSubject": {
+				"properties": {
+					"status": {
+						"$ref": "#/components/schemas/AttendanceStatusEnum"
+					},
+					"subject": {
 						"properties": {
 							"name": {
 								"type": "string"
@@ -836,57 +871,13 @@
 						],
 						"type": "object"
 					},
-					"not_present_percentage": {
-						"type": "number",
-						"format": "double"
-					},
-					"present_percentage": {
-						"type": "number",
-						"format": "double"
-					},
-					"alpha": {
-						"type": "number",
-						"format": "double"
-					},
-					"sick": {
-						"type": "number",
-						"format": "double"
-					},
-					"leave": {
-						"type": "number",
-						"format": "double"
-					},
-					"present": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"student",
-					"not_present_percentage",
-					"present_percentage",
-					"alpha",
-					"sick",
-					"leave",
-					"present"
-				],
-				"type": "object"
-			},
-			"AttendanceTrackingSubject": {
-				"properties": {
-					"attendance_status": {
-						"$ref": "#/components/schemas/AttendanceStatusEnum"
-					},
-					"subject": {
-						"type": "string"
-					},
 					"id": {
 						"type": "number",
 						"format": "double"
 					}
 				},
 				"required": [
-					"attendance_status",
+					"status",
 					"subject",
 					"id"
 				],
@@ -3472,7 +3463,7 @@
 				]
 			}
 		},
-		"/v2/report/attendance-tracking/daily": {
+		"/v2/attendance-tracking/attendance-report/section/{section_id}/student/{student_id}/daily": {
 			"get": {
 				"operationId": "GetAttendanceTrackingDaily",
 				"responses": {
@@ -3537,20 +3528,15 @@
 												{
 													"id": 1,
 													"date": "2025-01-01",
-													"attendance_status": "present"
+													"status": "Present"
 												}
 											],
 											"extra_data": {
-												"present": 10,
-												"leave": 5,
-												"sick": 3,
-												"alpha": 2,
-												"not_present_percentage": 33.33,
-												"present_percentage": 66.67,
-												"student": {
-													"id": 1,
-													"name": "John Doe"
-												}
+												"present_percentage": 52,
+												"leave_percentage": 44,
+												"sick_percentage": 32,
+												"absent_percentage": 44,
+												"not_present_percentage": 33.33
 											}
 										}
 									}
@@ -3609,7 +3595,7 @@
 				]
 			}
 		},
-		"/v2/report/attendance-tracking/subject": {
+		"/v2/attendance-tracking/attendance-report/section/{section_id}/student/{student_id}/subject": {
 			"get": {
 				"operationId": "GetAttendanceTrackingSubject",
 				"responses": {
@@ -3673,21 +3659,19 @@
 											"data": [
 												{
 													"id": 1,
-													"subject": "Math",
-													"attendance_status": "present"
+													"subject": {
+														"id": 1,
+														"name": "Math"
+													},
+													"status": "Present"
 												}
 											],
 											"extra_data": {
-												"present": 10,
-												"leave": 5,
-												"sick": 3,
-												"alpha": 2,
-												"not_present_percentage": 33.33,
-												"present_percentage": 66.67,
-												"student": {
-													"id": 1,
-													"name": "John Doe"
-												}
+												"present_percentage": 52,
+												"leave_percentage": 44,
+												"sick_percentage": 32,
+												"absent_percentage": 44,
+												"not_present_percentage": 33.33
 											}
 										}
 									}
