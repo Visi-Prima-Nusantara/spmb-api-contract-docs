@@ -1884,6 +1884,597 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"AssessmentCategory": {
+				"enum": [
+					"formative",
+					"summative"
+				],
+				"type": "string"
+			},
+			"LearningObjective": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"max_score": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"code",
+					"description",
+					"max_score"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GradingTypeEnum": {
+				"enum": [
+					"Cognitive",
+					"Psycomotor"
+				],
+				"type": "string"
+			},
+			"CuriculumType": {
+				"enum": [
+					"KM",
+					"K13"
+				],
+				"type": "string"
+			},
+			"AssessmentTypeEnum": {
+				"enum": [
+					"Assignment",
+					"Test",
+					"Exam",
+					"Other Exam"
+				],
+				"type": "string"
+			},
+			"ExamTypeEnum": {
+				"enum": [
+					"1st PTS",
+					"2nd PTS",
+					"1st PAS",
+					"PAT"
+				],
+				"type": "string"
+			},
+			"ChapterType": {
+				"properties": {
+					"sections": {
+						"properties": {
+							"grade_section_name": {
+								"type": "string"
+							},
+							"course_name": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"grade_section_name",
+							"course_name",
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"topic_count": {
+						"type": "string"
+					},
+					"topic_set": {
+						"type": "string"
+					},
+					"semester": {
+						"type": "string"
+					},
+					"subject": {
+						"type": "number",
+						"format": "double"
+					},
+					"chapter_name": {
+						"type": "string"
+					},
+					"chapter_number": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"sections",
+					"topic_count",
+					"topic_set",
+					"semester",
+					"subject",
+					"chapter_name",
+					"chapter_number",
+					"id"
+				],
+				"type": "object"
+			},
+			"TopicType": {
+				"properties": {
+					"topic_number": {
+						"type": "string"
+					},
+					"topic_name": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"topic_number",
+					"topic_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"SubjectType": {
+				"properties": {
+					"is_elective": {
+						"type": "boolean"
+					},
+					"subject_name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"is_elective",
+					"subject_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"DistributionScheduleEnum": {
+				"enum": [
+					"publish_immediately",
+					"publish_for_future"
+				],
+				"type": "string"
+			},
+			"AssessmentReplacementScoreType": {
+				"enum": [
+					"full_score",
+					"set_max_score",
+					"kkm_score"
+				],
+				"type": "string"
+			},
+			"SectionListType": {
+				"properties": {
+					"course": {
+						"properties": {
+							"grade": {
+								"type": "string"
+							},
+							"course_name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"grade",
+							"course_name",
+							"id"
+						],
+						"type": "object"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"course",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"QuestionTypeEnum": {
+				"enum": [
+					"MCQ",
+					"MCQComplex",
+					"FillInBlanks",
+					"Essay",
+					"TrueFalse",
+					"Matching",
+					"FileUpload"
+				],
+				"type": "string"
+			},
+			"ResultContentEnum": {
+				"enum": [
+					"grade_with_submission_detail",
+					"grade_only"
+				],
+				"type": "string"
+			},
+			"ResultPostingEnum": {
+				"enum": [
+					"automatic_on_deadline",
+					"manual",
+					"scheduled"
+				],
+				"type": "string"
+			},
+			"SubmissionType": {
+				"enum": [
+					"Online",
+					"Offline"
+				],
+				"type": "string"
+			},
+			"TestTypeEnum": {
+				"enum": [
+					"Topic",
+					"Chapter"
+				],
+				"type": "string"
+			},
+			"GradingValueEnum": {
+				"enum": [
+					"grade_with_mark",
+					"grade_with_description"
+				],
+				"type": "string"
+			},
+			"Assessment": {
+				"properties": {
+					"academic_year_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"owner": {
+						"type": "number",
+						"format": "double"
+					},
+					"offline_submission_type": {
+						"$ref": "#/components/schemas/GradingValueEnum"
+					},
+					"time_limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total_marks_limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total_attempts_limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"test_type": {
+						"$ref": "#/components/schemas/TestTypeEnum"
+					},
+					"submission_type": {
+						"$ref": "#/components/schemas/SubmissionType"
+					},
+					"start_time": {
+						"type": "string"
+					},
+					"shuffling": {
+						"type": "boolean"
+					},
+					"sections": {
+						"items": {
+							"$ref": "#/components/schemas/SectionListType"
+						},
+						"type": "array"
+					},
+					"result_post_type": {
+						"$ref": "#/components/schemas/ResultPostingEnum"
+					},
+					"result_post_scheduled_at": {
+						"type": "string",
+						"nullable": true
+					},
+					"result_post_parts": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ResultContentEnum"
+							}
+						],
+						"nullable": true
+					},
+					"result_display_timestamp": {
+						"type": "string"
+					},
+					"replacement_score": {
+						"type": "number",
+						"format": "double"
+					},
+					"question_types_shuffle_orders": {
+						"items": {
+							"$ref": "#/components/schemas/QuestionTypeEnum"
+						},
+						"type": "array"
+					},
+					"post_to": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					},
+					"multiple_sessions": {
+						"items": {
+							"properties": {
+								"sections": {
+									"items": {
+										"$ref": "#/components/schemas/SectionListType"
+									},
+									"type": "array"
+								},
+								"post_to": {
+									"items": {
+										"properties": {
+											"id": {
+												"type": "number",
+												"format": "double"
+											},
+											"full_name": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"id",
+											"full_name"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								},
+								"opening_timestamp": {
+									"type": "string"
+								},
+								"distribution_schedule": {
+									"$ref": "#/components/schemas/DistributionScheduleEnum"
+								},
+								"closing_timestamp": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"sections",
+								"post_to",
+								"opening_timestamp",
+								"distribution_schedule",
+								"closing_timestamp",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"opening_timestamp": {
+						"type": "string",
+						"nullable": true
+					},
+					"max_replacement_score_type": {
+						"$ref": "#/components/schemas/AssessmentReplacementScoreType"
+					},
+					"is_question_type_shuffle": {
+						"type": "boolean"
+					},
+					"is_published": {
+						"type": "boolean"
+					},
+					"is_multiple_session": {
+						"type": "boolean"
+					},
+					"auto_submission_on_cheat_attempt_max_reached": {
+						"type": "boolean"
+					},
+					"is_auto_submission": {
+						"type": "boolean"
+					},
+					"instructions": {
+						"type": "string"
+					},
+					"distribution_schedule": {
+						"$ref": "#/components/schemas/DistributionScheduleEnum"
+					},
+					"closing_timestamp": {
+						"type": "string",
+						"nullable": true
+					},
+					"cheat_attempt_threshhold": {
+						"type": "number",
+						"format": "double"
+					},
+					"anticheat_enabled": {
+						"type": "boolean"
+					},
+					"has_camera_access": {
+						"type": "boolean"
+					},
+					"is_replacement": {
+						"type": "boolean"
+					},
+					"subject": {
+						"$ref": "#/components/schemas/SubjectType"
+					},
+					"topic": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/TopicType"
+							}
+						],
+						"nullable": true
+					},
+					"chapter": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ChapterType"
+							}
+						],
+						"nullable": true
+					},
+					"exam_type": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ExamTypeEnum"
+							}
+						],
+						"nullable": true
+					},
+					"is_replacement_for": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"assessment_type": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/AssessmentTypeEnum"
+							}
+						],
+						"nullable": true
+					},
+					"curriculum_type": {
+						"$ref": "#/components/schemas/CuriculumType"
+					},
+					"grade_type": {
+						"$ref": "#/components/schemas/GradingTypeEnum"
+					},
+					"semester": {
+						"type": "number",
+						"format": "double"
+					},
+					"has_questions_mapped_to_objectives": {
+						"type": "boolean"
+					},
+					"has_learning_objectives": {
+						"type": "boolean"
+					},
+					"learning_objectives": {
+						"items": {
+							"$ref": "#/components/schemas/LearningObjective"
+						},
+						"type": "array"
+					},
+					"assessment_category": {
+						"$ref": "#/components/schemas/AssessmentCategory"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"academic_year_id",
+					"owner",
+					"offline_submission_type",
+					"time_limit",
+					"total_marks_limit",
+					"total_attempts_limit",
+					"test_type",
+					"submission_type",
+					"start_time",
+					"shuffling",
+					"sections",
+					"result_post_type",
+					"result_display_timestamp",
+					"replacement_score",
+					"question_types_shuffle_orders",
+					"post_to",
+					"multiple_sessions",
+					"max_replacement_score_type",
+					"is_question_type_shuffle",
+					"is_published",
+					"is_multiple_session",
+					"auto_submission_on_cheat_attempt_max_reached",
+					"is_auto_submission",
+					"instructions",
+					"distribution_schedule",
+					"cheat_attempt_threshhold",
+					"anticheat_enabled",
+					"has_camera_access",
+					"is_replacement",
+					"subject",
+					"topic",
+					"chapter",
+					"exam_type",
+					"curriculum_type",
+					"grade_type",
+					"semester",
+					"learning_objectives",
+					"assessment_category",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_Assessment_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/Assessment"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"RegistrationInformation": {
 				"properties": {
 					"id": {
@@ -4566,6 +5157,133 @@
 						"required": false,
 						"schema": {
 							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v2/quiz/{id}": {
+			"get": {
+				"operationId": "GetQuizDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Assessment_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 113464,
+												"title": "Tes Offline Grade Desc",
+												"sections": [
+													{
+														"id": 45573,
+														"name": "B-KM",
+														"course": {
+															"id": 3539,
+															"course_name": "Kelas 7 KM Cahaya Rembulan",
+															"grade": "7"
+														}
+													},
+													{
+														"id": 45575,
+														"name": "A-KM",
+														"course": {
+															"id": 3539,
+															"course_name": "Kelas 7 KM Cahaya Rembulan",
+															"grade": "7"
+														}
+													}
+												],
+												"subject": {
+													"id": 9569,
+													"subject_name": "Bahasa Indonesia",
+													"is_elective": false
+												},
+												"is_replacement": false,
+												"is_replacement_for": null,
+												"assessment_category": "formative",
+												"semester": 1,
+												"max_replacement_score_type": "full_score",
+												"replacement_score": 100,
+												"result_post_scheduled_at": null,
+												"result_post_parts": "grade_only",
+												"assessment_type": null,
+												"is_multiple_session": false,
+												"result_post_type": "manual",
+												"instructions": "<p>lorem ipsum</p>",
+												"distribution_schedule": "publish_immediately",
+												"anticheat_enabled": false,
+												"is_auto_submission": false,
+												"question_types_shuffle_orders": [],
+												"is_question_type_shuffle": false,
+												"shuffling": false,
+												"time_limit": 0,
+												"post_to": [],
+												"opening_timestamp": "2025-06-18T06:56:14Z",
+												"closing_timestamp": "2025-06-18T06:58:00Z",
+												"multiple_sessions": [],
+												"grade_type": "Cognitive",
+												"result_display_timestamp": "",
+												"total_marks_limit": 0,
+												"total_attempts_limit": 1,
+												"is_published": true,
+												"exam_type": "1st PAS",
+												"test_type": "Chapter",
+												"submission_type": "Online",
+												"start_time": "",
+												"cheat_attempt_threshhold": 2,
+												"offline_submission_type": "grade_with_description",
+												"auto_submission_on_cheat_attempt_max_reached": false,
+												"has_camera_access": false,
+												"chapter": null,
+												"topic": null,
+												"owner": 1059886,
+												"academic_year_id": 27220,
+												"curriculum_type": "KM",
+												"has_learning_objectives": true,
+												"learning_objectives": [
+													{
+														"id": 1,
+														"code": "DEWA1",
+														"description": "This learning objective to make student can solve the easy - med math probelms",
+														"max_score": 50
+													},
+													{
+														"id": 2,
+														"code": "MATH2",
+														"description": "This learning objective to make student can solve the hard math probelms",
+														"max_score": 70
+													}
+												],
+												"has_questions_mapped_to_objectives": true
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Quiz"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]
