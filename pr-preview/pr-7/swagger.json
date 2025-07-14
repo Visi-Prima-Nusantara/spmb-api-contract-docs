@@ -1,0 +1,6912 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ResponseEnvelope_any_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserType": {
+				"enum": [
+					"admin",
+					"official1",
+					"official2",
+					"foundation",
+					"applicant"
+				],
+				"type": "string"
+			},
+			"UserType.ADMIN": {
+				"enum": [
+					"admin"
+				],
+				"type": "string"
+			},
+			"SchoolAdminUser": {
+				"properties": {
+					"school": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/UserType.ADMIN"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"school",
+					"email",
+					"last_name",
+					"first_name",
+					"username",
+					"type",
+					"id"
+				],
+				"type": "object"
+			},
+			"UserType.OFFICIAL1": {
+				"enum": [
+					"official1"
+				],
+				"type": "string"
+			},
+			"UserType.OFFICIAL2": {
+				"enum": [
+					"official2"
+				],
+				"type": "string"
+			},
+			"UserType.FOUNDATION": {
+				"enum": [
+					"foundation"
+				],
+				"type": "string"
+			},
+			"OfficialUser": {
+				"properties": {
+					"foundation": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"type": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/UserType.OFFICIAL1"
+							},
+							{
+								"$ref": "#/components/schemas/UserType.OFFICIAL2"
+							},
+							{
+								"$ref": "#/components/schemas/UserType.FOUNDATION"
+							}
+						]
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"foundation",
+					"email",
+					"last_name",
+					"first_name",
+					"username",
+					"type",
+					"id"
+				],
+				"type": "object"
+			},
+			"UserType.APPLICANT": {
+				"enum": [
+					"applicant"
+				],
+				"type": "string"
+			},
+			"ApplicantUser": {
+				"properties": {
+					"school": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/UserType.APPLICANT"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"school",
+					"email",
+					"last_name",
+					"first_name",
+					"username",
+					"type",
+					"id"
+				],
+				"type": "object"
+			},
+			"User": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/SchoolAdminUser"
+					},
+					{
+						"$ref": "#/components/schemas/OfficialUser"
+					},
+					{
+						"$ref": "#/components/schemas/ApplicantUser"
+					}
+				]
+			},
+			"PaginatedResponseEnvelope_User_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/User"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SchoolLevel": {
+				"description": "Enum representing different school levels.\r\n0 = Elementary School, 1 = Middle School, 2 = High School",
+				"enum": [
+					"0",
+					"1",
+					"2"
+				],
+				"type": "string"
+			},
+			"ReRegistrationStatus": {
+				"enum": [
+					"Registered",
+					"Not Registered",
+					"Not Active"
+				],
+				"type": "string"
+			},
+			"SchoolApplicant": {
+				"properties": {
+					"re_registration_status": {
+						"$ref": "#/components/schemas/ReRegistrationStatus"
+					},
+					"accepted_school_name": {
+						"type": "string"
+					},
+					"registration_date": {
+						"type": "string",
+						"description": "ISO 8601 date string"
+					},
+					"school_level": {
+						"$ref": "#/components/schemas/SchoolLevel"
+					},
+					"registration_path": {
+						"type": "string",
+						"description": "Registration path name"
+					},
+					"nisn": {
+						"type": "string"
+					},
+					"dob": {
+						"type": "string",
+						"description": "Date of Birth in ISO 8601 date string"
+					},
+					"registration_id": {
+						"type": "string"
+					},
+					"full_name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"re_registration_status",
+					"accepted_school_name",
+					"registration_date",
+					"school_level",
+					"registration_path",
+					"nisn",
+					"dob",
+					"registration_id",
+					"full_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"SchoolApplicantListExtraData": {
+				"properties": {
+					"is_published": {
+						"type": "boolean",
+						"description": "Indicates if the registration is published",
+						"example": false
+					},
+					"is_registration_ended": {
+						"type": "boolean",
+						"description": "Indicates if the registration has ended",
+						"example": false
+					}
+				},
+				"required": [
+					"is_published",
+					"is_registration_ended"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_SchoolApplicant.SchoolApplicantListExtraData_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/SchoolApplicant"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"$ref": "#/components/schemas/SchoolApplicantListExtraData",
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationType": {
+				"description": "Enum representing different types of registration.\r\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom",
+				"enum": [
+					"0",
+					"1",
+					"2",
+					"3",
+					"4"
+				],
+				"type": "string"
+			},
+			"ResponseEnvelope_void_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PublishFinalResultValidationError": {
+				"properties": {
+					"data": {
+						"properties": {
+							"registration_type": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array",
+								"description": "Error message key if the registration type still has drafted applicants or the registration type has not ended. <br>\r\n**Posible values:** `registration_type_still_has_drafted_applicants` or `registration_type_not_ended`",
+								"example": [
+									"registration_type_still_has_drafted_applicants"
+								]
+							}
+						},
+						"required": [
+							"registration_type"
+						],
+						"type": "object"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message, Whatever the error message is"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false,
+						"description": "Error flag"
+					},
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false,
+						"description": "HTTP Response code"
+					}
+				},
+				"required": [
+					"data",
+					"message",
+					"error",
+					"code"
+				],
+				"type": "object"
+			},
+			"PublishFinalResultPayload": {
+				"properties": {
+					"registration_type": {
+						"$ref": "#/components/schemas/RegistrationType",
+						"description": "Registration type to publish final result for <br>\r\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom"
+					}
+				},
+				"required": [
+					"registration_type"
+				],
+				"type": "object"
+			},
+			"SchoolType": {
+				"enum": [
+					"Private",
+					"Govt"
+				],
+				"type": "string"
+			},
+			"School": {
+				"properties": {
+					"address": {
+						"type": "string"
+					},
+					"accreditation": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/SchoolType"
+					},
+					"npsn": {
+						"type": "string"
+					},
+					"level": {
+						"$ref": "#/components/schemas/SchoolLevel"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"address",
+					"accreditation",
+					"type",
+					"npsn",
+					"level",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_School_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/School"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SchoolDetail": {
+				"properties": {
+					"other_information": {
+						"type": "string"
+					},
+					"extracurriculars": {
+						"items": {
+							"properties": {
+								"description": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"description",
+								"name",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"school_facilities": {
+						"properties": {
+							"number_of_sports_facilities": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_libraries": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_laboratories": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_classrooms": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"number_of_sports_facilities",
+							"number_of_libraries",
+							"number_of_laboratories",
+							"number_of_classrooms"
+						],
+						"type": "object"
+					},
+					"educators_and_students": {
+						"properties": {
+							"number_of_students_grade_6": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_students_grade_5": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_students_grade_4": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_students_grade_3": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_students_grade_2": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_students_grade_1": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_teachers": {
+								"type": "number",
+								"format": "double"
+							},
+							"number_of_administrative_staff": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"number_of_students_grade_6",
+							"number_of_students_grade_5",
+							"number_of_students_grade_4",
+							"number_of_students_grade_3",
+							"number_of_students_grade_2",
+							"number_of_students_grade_1",
+							"number_of_teachers",
+							"number_of_administrative_staff"
+						],
+						"type": "object"
+					},
+					"general_information": {
+						"properties": {
+							"type": {
+								"$ref": "#/components/schemas/SchoolType"
+							},
+							"curriculum": {
+								"type": "string"
+							},
+							"accreditation_year": {
+								"type": "string"
+							},
+							"accreditation": {
+								"type": "string"
+							},
+							"level": {
+								"$ref": "#/components/schemas/SchoolLevel"
+							},
+							"email": {
+								"type": "string"
+							},
+							"address": {
+								"properties": {
+									"address": {
+										"type": "string"
+									},
+									"coordinates": {
+										"properties": {
+											"lng": {
+												"type": "number",
+												"format": "double"
+											},
+											"lat": {
+												"type": "number",
+												"format": "double"
+											}
+										},
+										"required": [
+											"lng",
+											"lat"
+										],
+										"type": "object"
+									},
+									"postal_code": {
+										"type": "string"
+									},
+									"sub_district": {
+										"type": "string"
+									},
+									"district": {
+										"type": "string"
+									},
+									"city": {
+										"type": "string"
+									},
+									"province": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"address",
+									"coordinates",
+									"postal_code",
+									"sub_district",
+									"district",
+									"city",
+									"province"
+								],
+								"type": "object"
+							},
+							"npsn": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"type",
+							"curriculum",
+							"accreditation_year",
+							"accreditation",
+							"level",
+							"email",
+							"address",
+							"npsn",
+							"name"
+						],
+						"type": "object"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"other_information",
+					"extracurriculars",
+					"school_facilities",
+					"educators_and_students",
+					"general_information",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttendanceStatusEnum": {
+				"enum": [
+					"Present",
+					"Leave",
+					"Sick",
+					"Absent"
+				],
+				"type": "string"
+			},
+			"AttendanceTrackingDaily": {
+				"properties": {
+					"status": {
+						"$ref": "#/components/schemas/AttendanceStatusEnum"
+					},
+					"date": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"status",
+					"date",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttendanceTrackingExtraData": {
+				"properties": {
+					"not_present_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"absent_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"sick_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"leave_percentage": {
+						"type": "number",
+						"format": "double"
+					},
+					"present_percentage": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"not_present_percentage",
+					"absent_percentage",
+					"sick_percentage",
+					"leave_percentage",
+					"present_percentage"
+				],
+				"type": "object"
+			},
+			"AttendanceTrackingSubject": {
+				"properties": {
+					"status": {
+						"$ref": "#/components/schemas/AttendanceStatusEnum"
+					},
+					"subject": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"status",
+					"subject",
+					"id"
+				],
+				"type": "object"
+			},
+			"AttendanceReport": {
+				"properties": {
+					"daily_attendance_rate": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"section_name": {
+						"type": "string"
+					},
+					"section_id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"daily_attendance_rate",
+					"section_name",
+					"section_id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_AttendanceReport_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/AttendanceReport"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AttendanceReportStudent": {
+				"properties": {
+					"daily_attendance_rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"student_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"student_name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"daily_attendance_rate",
+					"student_id",
+					"student_name"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_AttendanceReportStudent_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/AttendanceReportStudent"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_AcademicYear.Exclude_keyofAcademicYear.is_published__": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"academic_year": {
+						"type": "string"
+					},
+					"start_date": {
+						"type": "string"
+					},
+					"end_date": {
+						"type": "string"
+					},
+					"semester1_start_date": {
+						"type": "string"
+					},
+					"semester2_start_date": {
+						"type": "string"
+					},
+					"semester1_end_date": {
+						"type": "string"
+					},
+					"semester2_end_date": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"academic_year",
+					"start_date",
+					"end_date",
+					"semester1_start_date",
+					"semester2_start_date",
+					"semester1_end_date",
+					"semester2_end_date"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_AcademicYear.is_published_": {
+				"$ref": "#/components/schemas/Pick_AcademicYear.Exclude_keyofAcademicYear.is_published__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"AttendanceReportDetail": {
+				"properties": {
+					"semester": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"academic_year": {
+						"$ref": "#/components/schemas/Omit_AcademicYear.is_published_"
+					},
+					"course": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"section": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"semester",
+					"academic_year",
+					"course",
+					"section"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_AttendanceReportDetail_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/AttendanceReportDetail"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationPathParameterType": {
+				"enum": [
+					"total_nilai",
+					"umur",
+					"jarak",
+					"tanggal_pendaftaran",
+					"kustom_poin",
+					"poin_non_akademik"
+				],
+				"type": "string"
+			},
+			"RegistrationPathCalculationParameter": {
+				"properties": {
+					"params": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPathParameterType"
+						},
+						"type": "array"
+					},
+					"registration_type": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationType"
+						},
+						"type": "array",
+						"description": "Array of Enum representing different types of registration.\r\n0 = Zoning, 1 = Achievement, 2 = Affirmation, 3 = Transfer, 4 = Custom"
+					}
+				},
+				"required": [
+					"params",
+					"registration_type"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_RegistrationPathCalculationParameter-Array_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPathCalculationParameter"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationPathStatus": {
+				"description": "0 = Active, 1 = Non-active",
+				"enum": [
+					"1",
+					"0"
+				],
+				"type": "string"
+			},
+			"RegistrationPath": {
+				"properties": {
+					"is_have_payment": {
+						"type": "boolean",
+						"description": "Boolean value indicating whether the registration path has payment or not."
+					},
+					"status": {
+						"$ref": "#/components/schemas/RegistrationPathStatus",
+						"description": "Registration path status"
+					},
+					"end_date": {
+						"type": "string",
+						"description": "ISO 8601 date-time string"
+					},
+					"start_date": {
+						"type": "string",
+						"description": "ISO 8601 date-time string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"registration_type": {
+						"$ref": "#/components/schemas/RegistrationType"
+					},
+					"level": {
+						"$ref": "#/components/schemas/SchoolLevel"
+					},
+					"name": {
+						"type": "string",
+						"description": "Name of the registration path"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"is_have_payment",
+					"status",
+					"end_date",
+					"start_date",
+					"description",
+					"registration_type",
+					"level",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_RegistrationPath_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPath"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_RegistrationPath_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/RegistrationPath"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DuplicateNameResponse": {
+				"properties": {
+					"data": {
+						"properties": {
+							"name": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array",
+								"description": "for duplicate name, it must be an array with string \"name_is_duplicate\" as the item"
+							}
+						},
+						"required": [
+							"name"
+						],
+						"type": "object"
+					},
+					"message": {
+						"type": "string",
+						"description": "this message could be anything, since we just gonna use the data field for validation error message"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false
+					},
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"data",
+					"message",
+					"error",
+					"code"
+				],
+				"type": "object"
+			},
+			"RegistrationPathFieldType": {
+				"description": "0 = Text, 1 = Number, 2 = Choice, 3 = Multiple Choice, 4 = Date, 5 = Document",
+				"enum": [
+					"0",
+					"1",
+					"2",
+					"3",
+					"4",
+					"5"
+				],
+				"type": "string"
+			},
+			"RegistrationPathConfig": {
+				"properties": {
+					"is_editable": {
+						"type": "boolean"
+					},
+					"is_deleteable": {
+						"type": "boolean"
+					},
+					"fields": {
+						"items": {
+							"properties": {
+								"is_editable": {
+									"type": "boolean"
+								},
+								"ordering": {
+									"type": "number",
+									"format": "double",
+									"description": "Field ordering"
+								},
+								"options": {
+									"items": {
+										"properties": {
+											"label": {
+												"type": "string",
+												"description": "Option label"
+											},
+											"id": {
+												"type": "number",
+												"format": "double",
+												"description": "Option ID"
+											}
+										},
+										"required": [
+											"label"
+										],
+										"type": "object"
+									},
+									"type": "array",
+									"description": "List of options for the field. Only applicable for field type 2 and 3."
+								},
+								"field_type": {
+									"$ref": "#/components/schemas/RegistrationPathFieldType",
+									"description": "Field type\r\n0 = Text, 1 = Number, 2 = Choice, 3 = Multiple Choice, 4 = Date, 5 = Document"
+								},
+								"is_required": {
+									"type": "boolean",
+									"description": "Boolean value indicating whether the field is required or not."
+								},
+								"title": {
+									"type": "string",
+									"description": "Field title"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"is_editable",
+								"ordering",
+								"options",
+								"field_type",
+								"is_required",
+								"title"
+							],
+							"type": "object"
+						},
+						"type": "array",
+						"description": "List of fields in the group"
+					},
+					"name": {
+						"type": "string",
+						"description": "Fields group name"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"is_editable",
+					"is_deleteable",
+					"fields",
+					"name"
+				],
+				"type": "object"
+			},
+			"RegistrationPathBillingScheduleType": {
+				"description": "0 = Pay at registration, 1 = Pay after acceptance",
+				"enum": [
+					"0",
+					"1"
+				],
+				"type": "string"
+			},
+			"RegistrationPathPaymentMethod": {
+				"enum": [
+					"BANK_TRANSFER",
+					"QRIS",
+					"EWALLET"
+				],
+				"type": "string"
+			},
+			"RegistrationPathPaymentConfig": {
+				"properties": {
+					"payment_methods": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPathPaymentMethod"
+						},
+						"type": "array",
+						"description": "List of payment methods available for the registration path."
+					},
+					"items": {
+						"items": {
+							"properties": {
+								"billing_schedule_type": {
+									"$ref": "#/components/schemas/RegistrationPathBillingScheduleType",
+									"description": "When the payment should be made.\r\n0 = Pay at registration, 1 = Pay after acceptance"
+								},
+								"price": {
+									"type": "number",
+									"format": "double"
+								},
+								"name": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"billing_schedule_type",
+								"price",
+								"name"
+							],
+							"type": "object"
+						},
+						"type": "array",
+						"description": "List of items need to be paid for the registration path."
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"payment_methods",
+					"items"
+				],
+				"type": "object",
+				"description": "Payment configuration for the registration path (Step 4)"
+			},
+			"RegistrationPathPayload": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"general": {
+						"properties": {
+							"end_date": {
+								"type": "string",
+								"description": "ISO 8601 date-time string"
+							},
+							"start_date": {
+								"type": "string",
+								"description": "ISO 8601 date-time string"
+							},
+							"description": {
+								"type": "string"
+							},
+							"registration_type": {
+								"$ref": "#/components/schemas/RegistrationType"
+							},
+							"level": {
+								"$ref": "#/components/schemas/SchoolLevel"
+							},
+							"name": {
+								"type": "string",
+								"description": "Name of the registration path"
+							}
+						},
+						"required": [
+							"end_date",
+							"start_date",
+							"description",
+							"registration_type",
+							"level",
+							"name"
+						],
+						"type": "object",
+						"description": "Registration path general information (Step 1)"
+					},
+					"configuration": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPathConfig"
+						},
+						"type": "array",
+						"description": "Form configuration for the registration path (Step 2)"
+					},
+					"schools": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array",
+						"description": "List of school IDs that are associated with the registration path (Step 3)"
+					},
+					"payment_config": {
+						"$ref": "#/components/schemas/RegistrationPathPaymentConfig"
+					},
+					"zone_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"description": "Registration path zone id, null if the registration path is not zone-based."
+					}
+				},
+				"required": [
+					"general",
+					"configuration",
+					"schools",
+					"zone_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationPathDetail": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"general": {
+						"properties": {
+							"end_date": {
+								"type": "string",
+								"description": "ISO 8601 date-time string"
+							},
+							"start_date": {
+								"type": "string",
+								"description": "ISO 8601 date-time string"
+							},
+							"description": {
+								"type": "string"
+							},
+							"registration_type": {
+								"$ref": "#/components/schemas/RegistrationType"
+							},
+							"level": {
+								"$ref": "#/components/schemas/SchoolLevel"
+							},
+							"name": {
+								"type": "string",
+								"description": "Name of the registration path"
+							}
+						},
+						"required": [
+							"end_date",
+							"start_date",
+							"description",
+							"registration_type",
+							"level",
+							"name"
+						],
+						"type": "object",
+						"description": "Registration path general information (Step 1)"
+					},
+					"configuration": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPathConfig"
+						},
+						"type": "array",
+						"description": "Form configuration for the registration path (Step 2)"
+					},
+					"schools": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array",
+						"description": "List of school IDs that are associated with the registration path (Step 3)"
+					},
+					"payment_config": {
+						"$ref": "#/components/schemas/RegistrationPathPaymentConfig"
+					},
+					"zone_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"description": "Registration path zone id, null if the registration path is not zone-based."
+					},
+					"has_applicant": {
+						"type": "boolean",
+						"description": "Boolean value indicating whether the registration path has applicant or not."
+					}
+				},
+				"required": [
+					"general",
+					"configuration",
+					"schools",
+					"zone_id",
+					"has_applicant"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_RegistrationPathDetail_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/RegistrationPathDetail"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_null_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationPathPaymentStatus": {
+				"enum": [
+					"CREATED",
+					"WAITING_PAYMENT",
+					"PAYMENT_IN_PROGRESS",
+					"DISBURSE_IN_PROGRESS",
+					"COMPLETE",
+					"INCOMPLETE",
+					"EXPIRED",
+					"PAYMENT_FAILED"
+				],
+				"type": "string"
+			},
+			"RegistrationPathPayment": {
+				"properties": {
+					"transaction_code": {
+						"type": "string"
+					},
+					"payment_status": {
+						"$ref": "#/components/schemas/RegistrationPathPaymentStatus"
+					},
+					"payment_method": {
+						"type": "string"
+					},
+					"payment_date": {
+						"type": "string"
+					},
+					"payment_amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"fee_names": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"student_name": {
+						"type": "string"
+					},
+					"billing_schedule_type": {
+						"$ref": "#/components/schemas/RegistrationPathBillingScheduleType"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"transaction_code",
+					"payment_status",
+					"payment_method",
+					"payment_date",
+					"payment_amount",
+					"fee_names",
+					"student_name",
+					"billing_schedule_type",
+					"id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_RegistrationPathPayment_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationPathPayment"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AssessmentCategory": {
+				"enum": [
+					"formative",
+					"summative"
+				],
+				"type": "string"
+			},
+			"LearningObjective": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"code": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"course_subject": {
+						"type": "number",
+						"format": "double"
+					},
+					"is_mapped": {
+						"type": "boolean"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"code",
+					"description",
+					"course_subject",
+					"is_mapped",
+					"order"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GradingTypeEnum": {
+				"enum": [
+					"Cognitive",
+					"Psycomotor"
+				],
+				"type": "string"
+			},
+			"CuriculumType": {
+				"enum": [
+					"KM",
+					"K13"
+				],
+				"type": "string"
+			},
+			"AssessmentTypeEnum": {
+				"enum": [
+					"Assignment",
+					"Test",
+					"Exam",
+					"Other Exam"
+				],
+				"type": "string"
+			},
+			"ExamTypeEnum": {
+				"enum": [
+					"1st PTS",
+					"2nd PTS",
+					"1st PAS",
+					"PAT"
+				],
+				"type": "string"
+			},
+			"ChapterType": {
+				"properties": {
+					"sections": {
+						"properties": {
+							"grade_section_name": {
+								"type": "string"
+							},
+							"course_name": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"grade_section_name",
+							"course_name",
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"topic_count": {
+						"type": "string"
+					},
+					"topic_set": {
+						"type": "string"
+					},
+					"semester": {
+						"type": "string"
+					},
+					"subject": {
+						"type": "number",
+						"format": "double"
+					},
+					"chapter_name": {
+						"type": "string"
+					},
+					"chapter_number": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"sections",
+					"topic_count",
+					"topic_set",
+					"semester",
+					"subject",
+					"chapter_name",
+					"chapter_number",
+					"id"
+				],
+				"type": "object"
+			},
+			"TopicType": {
+				"properties": {
+					"topic_number": {
+						"type": "string"
+					},
+					"topic_name": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"topic_number",
+					"topic_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"SubjectType": {
+				"properties": {
+					"is_elective": {
+						"type": "boolean"
+					},
+					"subject_name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"is_elective",
+					"subject_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"DistributionScheduleEnum": {
+				"enum": [
+					"publish_immediately",
+					"publish_for_future"
+				],
+				"type": "string"
+			},
+			"AssessmentReplacementScoreType": {
+				"enum": [
+					"full_score",
+					"set_max_score",
+					"kkm_score"
+				],
+				"type": "string"
+			},
+			"SectionListType": {
+				"properties": {
+					"course": {
+						"properties": {
+							"grade": {
+								"type": "string"
+							},
+							"course_name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"grade",
+							"course_name",
+							"id"
+						],
+						"type": "object"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"course",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"QuestionTypeEnum": {
+				"enum": [
+					"MCQ",
+					"MCQComplex",
+					"FillInBlanks",
+					"Essay",
+					"TrueFalse",
+					"Matching",
+					"FileUpload"
+				],
+				"type": "string"
+			},
+			"ResultContentEnum": {
+				"enum": [
+					"grade_with_submission_detail",
+					"grade_only"
+				],
+				"type": "string"
+			},
+			"ResultPostingEnum": {
+				"enum": [
+					"automatic_on_deadline",
+					"manual",
+					"scheduled"
+				],
+				"type": "string"
+			},
+			"SubmissionType": {
+				"enum": [
+					"Online",
+					"Offline"
+				],
+				"type": "string"
+			},
+			"TestTypeEnum": {
+				"enum": [
+					"Topic",
+					"Chapter"
+				],
+				"type": "string"
+			},
+			"GradingValueEnum": {
+				"enum": [
+					"grade_with_mark",
+					"grade_with_description"
+				],
+				"type": "string"
+			},
+			"Assessment": {
+				"properties": {
+					"academic_year_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"owner": {
+						"type": "number",
+						"format": "double"
+					},
+					"offline_submission_type": {
+						"$ref": "#/components/schemas/GradingValueEnum"
+					},
+					"time_limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total_marks_limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total_attempts_limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"test_type": {
+						"$ref": "#/components/schemas/TestTypeEnum"
+					},
+					"submission_type": {
+						"$ref": "#/components/schemas/SubmissionType"
+					},
+					"start_time": {
+						"type": "string"
+					},
+					"shuffling": {
+						"type": "boolean"
+					},
+					"sections": {
+						"items": {
+							"$ref": "#/components/schemas/SectionListType"
+						},
+						"type": "array"
+					},
+					"result_post_type": {
+						"$ref": "#/components/schemas/ResultPostingEnum"
+					},
+					"result_post_scheduled_at": {
+						"type": "string",
+						"nullable": true
+					},
+					"result_post_parts": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ResultContentEnum"
+							}
+						],
+						"nullable": true
+					},
+					"result_display_timestamp": {
+						"type": "string"
+					},
+					"replacement_score": {
+						"type": "number",
+						"format": "double"
+					},
+					"question_types_shuffle_orders": {
+						"items": {
+							"$ref": "#/components/schemas/QuestionTypeEnum"
+						},
+						"type": "array"
+					},
+					"post_to": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					},
+					"multiple_sessions": {
+						"items": {
+							"properties": {
+								"sections": {
+									"items": {
+										"$ref": "#/components/schemas/SectionListType"
+									},
+									"type": "array"
+								},
+								"post_to": {
+									"items": {
+										"properties": {
+											"id": {
+												"type": "number",
+												"format": "double"
+											},
+											"full_name": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"id",
+											"full_name"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								},
+								"opening_timestamp": {
+									"type": "string"
+								},
+								"distribution_schedule": {
+									"$ref": "#/components/schemas/DistributionScheduleEnum"
+								},
+								"closing_timestamp": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"sections",
+								"post_to",
+								"opening_timestamp",
+								"distribution_schedule",
+								"closing_timestamp",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"opening_timestamp": {
+						"type": "string",
+						"nullable": true
+					},
+					"max_replacement_score_type": {
+						"$ref": "#/components/schemas/AssessmentReplacementScoreType"
+					},
+					"is_question_type_shuffle": {
+						"type": "boolean"
+					},
+					"is_published": {
+						"type": "boolean"
+					},
+					"is_multiple_session": {
+						"type": "boolean"
+					},
+					"auto_submission_on_cheat_attempt_max_reached": {
+						"type": "boolean"
+					},
+					"is_auto_submission": {
+						"type": "boolean"
+					},
+					"instructions": {
+						"type": "string"
+					},
+					"distribution_schedule": {
+						"$ref": "#/components/schemas/DistributionScheduleEnum"
+					},
+					"closing_timestamp": {
+						"type": "string",
+						"nullable": true
+					},
+					"cheat_attempt_threshhold": {
+						"type": "number",
+						"format": "double"
+					},
+					"anticheat_enabled": {
+						"type": "boolean"
+					},
+					"has_camera_access": {
+						"type": "boolean"
+					},
+					"is_replacement": {
+						"type": "boolean"
+					},
+					"subject": {
+						"$ref": "#/components/schemas/SubjectType"
+					},
+					"topic": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/TopicType"
+							}
+						],
+						"nullable": true
+					},
+					"chapter": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ChapterType"
+							}
+						],
+						"nullable": true
+					},
+					"exam_type": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ExamTypeEnum"
+							}
+						],
+						"nullable": true
+					},
+					"is_replacement_for": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"assessment_type": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/AssessmentTypeEnum"
+							}
+						],
+						"nullable": true
+					},
+					"curriculum_type": {
+						"$ref": "#/components/schemas/CuriculumType"
+					},
+					"grade_type": {
+						"$ref": "#/components/schemas/GradingTypeEnum"
+					},
+					"semester": {
+						"type": "number",
+						"format": "double"
+					},
+					"has_questions_mapped_to_objectives": {
+						"type": "boolean"
+					},
+					"has_learning_objectives": {
+						"type": "boolean"
+					},
+					"learning_objectives": {
+						"items": {
+							"$ref": "#/components/schemas/LearningObjective"
+						},
+						"type": "array"
+					},
+					"assessment_category": {
+						"$ref": "#/components/schemas/AssessmentCategory"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"academic_year_id",
+					"owner",
+					"offline_submission_type",
+					"time_limit",
+					"total_marks_limit",
+					"total_attempts_limit",
+					"test_type",
+					"submission_type",
+					"start_time",
+					"shuffling",
+					"sections",
+					"result_post_type",
+					"result_display_timestamp",
+					"replacement_score",
+					"question_types_shuffle_orders",
+					"post_to",
+					"multiple_sessions",
+					"max_replacement_score_type",
+					"is_question_type_shuffle",
+					"is_published",
+					"is_multiple_session",
+					"auto_submission_on_cheat_attempt_max_reached",
+					"is_auto_submission",
+					"instructions",
+					"distribution_schedule",
+					"cheat_attempt_threshhold",
+					"anticheat_enabled",
+					"has_camera_access",
+					"is_replacement",
+					"subject",
+					"topic",
+					"chapter",
+					"exam_type",
+					"curriculum_type",
+					"grade_type",
+					"semester",
+					"learning_objectives",
+					"assessment_category",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_Assessment_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/Assessment"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationInformation": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"level": {
+						"$ref": "#/components/schemas/SchoolLevel"
+					},
+					"type": {
+						"$ref": "#/components/schemas/RegistrationType"
+					},
+					"quota": {
+						"type": "integer",
+						"format": "int32",
+						"description": "The quota percentage information for the registration path.",
+						"maximum": 100,
+						"minimum": 1
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"level",
+					"type",
+					"quota"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationInformationDetailType": {
+				"description": "Enum representing different types of registration information details.\r\n0 = Requirement, 1 = Flow, 2 = Schedule, 3 = School",
+				"enum": [
+					"0",
+					"1",
+					"2",
+					"3"
+				],
+				"type": "string"
+			},
+			"RegistrationInformationDetail": {
+				"properties": {
+					"document": {
+						"type": "string",
+						"description": "URL to the document for the registration information detail."
+					},
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/RegistrationInformationDetailType"
+					},
+					"registration_information": {
+						"$ref": "#/components/schemas/RegistrationInformation"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"document",
+					"description",
+					"title",
+					"type",
+					"registration_information",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_RegistrationInformationDetail_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/RegistrationInformationDetail"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedResponseEnvelope_RegistrationInformation_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationInformation"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegistrationInformationWithDetails": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"level": {
+						"$ref": "#/components/schemas/SchoolLevel"
+					},
+					"type": {
+						"$ref": "#/components/schemas/RegistrationType"
+					},
+					"quota": {
+						"type": "integer",
+						"format": "int32",
+						"description": "The quota percentage information for the registration path.",
+						"maximum": 100,
+						"minimum": 1
+					},
+					"registration_details": {
+						"items": {
+							"$ref": "#/components/schemas/RegistrationInformationDetail"
+						},
+						"type": "array",
+						"description": "Registration details for the registration information."
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"level",
+					"type",
+					"quota",
+					"registration_details"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_RegistrationInformationWithDetails_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/RegistrationInformationWithDetails"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_RegistrationInformation_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/RegistrationInformation"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DuplicateTitleResponse": {
+				"properties": {
+					"data": {
+						"properties": {
+							"name": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array",
+								"description": "for duplicate name, it must be an array with string \"name_is_duplicate\" as the item"
+							}
+						},
+						"required": [
+							"name"
+						],
+						"type": "object"
+					},
+					"message": {
+						"type": "string"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false
+					},
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"data",
+					"message",
+					"error",
+					"code"
+				],
+				"type": "object"
+			},
+			"Pick_RegistrationInformation.Exclude_keyofRegistrationInformation.id__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"level": {
+						"$ref": "#/components/schemas/SchoolLevel"
+					},
+					"type": {
+						"$ref": "#/components/schemas/RegistrationType"
+					},
+					"quota": {
+						"type": "integer",
+						"format": "int32",
+						"description": "The quota percentage information for the registration path.",
+						"maximum": 100,
+						"minimum": 1
+					}
+				},
+				"required": [
+					"name",
+					"level",
+					"type",
+					"quota"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_RegistrationInformation.id_": {
+				"$ref": "#/components/schemas/Pick_RegistrationInformation.Exclude_keyofRegistrationInformation.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"GeneralInformation": {
+				"properties": {
+					"picture": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"picture",
+					"description",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_GeneralInformation-or-null_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/GeneralInformation"
+							}
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_GeneralInformation_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/GeneralInformation"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ValidationError_GeneralInformation_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false,
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false,
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"properties": {},
+						"type": "object",
+						"description": "Key value pair of field and error messages"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FAQ": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"description",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_FAQ_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/FAQ"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_FAQ_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/FAQ"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ValidationError_FAQ_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false,
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false,
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"properties": {},
+						"type": "object",
+						"description": "Key value pair of field and error messages"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_FAQ.Exclude_keyofFAQ.id__": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title",
+					"description"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_FAQ.id_": {
+				"$ref": "#/components/schemas/Pick_FAQ.Exclude_keyofFAQ.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"ContactInfo": {
+				"properties": {
+					"website": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string",
+						"description": "Profile URL, not the username."
+					},
+					"instagram": {
+						"type": "string",
+						"description": "Profile URL, not the username."
+					},
+					"whatsapp": {
+						"type": "string",
+						"description": "Should be already formatted with the country code without the plus sign."
+					},
+					"other_phone": {
+						"type": "string"
+					},
+					"alternative_phone": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"website",
+					"facebook",
+					"instagram",
+					"whatsapp",
+					"other_phone",
+					"alternative_phone",
+					"phone",
+					"email",
+					"address"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_ContactInfo_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/ContactInfo"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Banner": {
+				"properties": {
+					"picture": {
+						"type": "string",
+						"description": "Picture URL"
+					},
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"picture",
+					"description",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_Banner-or-null_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Banner"
+							}
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_Banner_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/Banner"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope__banner_duplicated-string__": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"properties": {
+							"banner_duplicated": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"banner_duplicated"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetDetailUser": {
+				"properties": {
+					"last_name": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"last_name",
+					"first_name",
+					"id"
+				],
+				"type": "object"
+			},
+			"ResponseEnvelope_GetDetailUser_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/GetDetailUser"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"buffer.File": {
+				"description": "Provides information about files and allows JavaScript in a web page to access their content.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/File)\n`File` class is a global reference for `import { File } from 'node:buffer'`\nhttps://nodejs.org/api/buffer.html#class-file",
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Announcement": {
+				"properties": {
+					"created_by": {
+						"type": "string"
+					},
+					"updated_at": {
+						"type": "string",
+						"description": "ISO 8601 date-time string",
+						"format": "date-time"
+					},
+					"created_at": {
+						"type": "string",
+						"description": "ISO 8601 date-time string",
+						"format": "date-time"
+					},
+					"file": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"$ref": "#/components/schemas/buffer.File"
+							}
+						]
+					},
+					"description": {
+						"type": "string",
+						"description": "This is an HTML string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"created_by",
+					"updated_at",
+					"created_at",
+					"description",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"PaginatedResponseEnvelope_Announcement_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"count": {
+						"type": "number",
+						"format": "double",
+						"description": "Total number of items"
+					},
+					"next": {
+						"type": "string",
+						"description": "Url of the next page"
+					},
+					"previous": {
+						"type": "string",
+						"description": "Url of the previous page"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/Announcement"
+						},
+						"type": "array"
+					},
+					"extra_data": {
+						"description": "Extra data that can be used for pagination or other purposes"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"count",
+					"next",
+					"previous",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_Announcement_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/Announcement"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ValidationError_AnnouncementPayload_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false,
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false,
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"properties": {},
+						"type": "object",
+						"description": "Key value pair of field and error messages"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "PPDB API",
+		"version": "1.0.0",
+		"description": "PPDB API",
+		"license": {
+			"name": "Private"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/v2/auth/user/info": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_any_"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Users paginated",
+				"summary": "Get all users",
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Search keyword",
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "search by username",
+						"in": "query",
+						"name": "username",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "user_type",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/UserType"
+							}
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_User_"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Users paginated",
+				"summary": "Get all users",
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Search keyword",
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "search by username",
+						"in": "query",
+						"name": "username",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "user_type",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/UserType"
+							}
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/final-result": {
+			"get": {
+				"operationId": "GetApplicants",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_SchoolApplicant.SchoolApplicantListExtraData_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"accepted_school_name": "School 1",
+													"dob": "2025-03-12T06:44:33.969Z",
+													"full_name": "John Doe",
+													"nisn": "12345678",
+													"re_registration_status": "Registered",
+													"registration_path": "Jalur Langit",
+													"registration_id": "2938493843",
+													"registration_date": "2025-03-12T06:44:33.969Z",
+													"school_level": "2"
+												}
+											],
+											"extra_data": {
+												"is_registration_ended": false,
+												"is_published": false
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get School Final applicant",
+				"summary": "Get all school final applicant",
+				"tags": [
+					"School Applicant"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "registration_type",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RegistrationType"
+						}
+					},
+					{
+						"description": "Search keyword",
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/final-result/publish": {
+			"post": {
+				"operationId": "PublishFinalResult",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_void_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": ""
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Registration type still has drafted applicants or the registration type has not ended",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PublishFinalResultValidationError"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "",
+											"data": {
+												"registration_type": [
+													"registration_type_still_has_drafted_applicants"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Publishes the final results for applicants of a specific registration type.<br>\r\nThis API **can only be used when the registration period has ended and there are no applicants in draft status**. If either condition is not met, the API will return an error.",
+				"summary": "Publish final result of the applicants",
+				"tags": [
+					"School Applicant"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PublishFinalResultPayload"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/final-result/export": {
+			"post": {
+				"operationId": "ExportFinalResult",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/vnd.ms-excel": {
+								"schema": {
+									"type": "string",
+									"format": "byte"
+								}
+							}
+						}
+					}
+				},
+				"description": "Exports the final result of the applicants for a specific registration type.<br>\r\n**Response will be a file in `.xls` format.**",
+				"summary": "Export final result of the applicants",
+				"tags": [
+					"School Applicant"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"registration_type": {
+										"$ref": "#/components/schemas/RegistrationType"
+									}
+								},
+								"required": [
+									"registration_type"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/schools": {
+			"get": {
+				"operationId": "GetSchools",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_School_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"name": "School 1",
+													"npsn": "12345678",
+													"type": "Private",
+													"accreditation": "A",
+													"address": "Jl. ABC",
+													"level": "0"
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Schools paginated",
+				"summary": "Get all schools",
+				"tags": [
+					"School"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Search keyword",
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "filter by school levels",
+						"in": "query",
+						"name": "levels",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/SchoolLevel"
+							}
+						}
+					},
+					{
+						"description": "filter by school ids",
+						"in": "query",
+						"name": "ids",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "get schools based on zone id",
+						"in": "query",
+						"name": "zone_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/schools/{schoolId}": {
+			"get": {
+				"operationId": "GetSchool",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SchoolDetail"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"id": 1,
+											"general_information": {
+												"name": "School 1",
+												"npsn": "12345678",
+												"address": {
+													"province": "Jawa Barat",
+													"city": "Bandung",
+													"district": "Cibiru",
+													"sub_district": " Cileunyi",
+													"postal_code": "12345",
+													"coordinates": {
+														"lat": -6.914744,
+														"lng": 107.619125
+													},
+													"address": "Jl. ABC"
+												},
+												"email": "",
+												"level": "0",
+												"accreditation": "A",
+												"accreditation_year": "2021",
+												"curriculum": "Kurikulum 2013",
+												"type": "Govt"
+											},
+											"educators_and_students": {
+												"number_of_administrative_staff": 10,
+												"number_of_teachers": 10,
+												"number_of_students_grade_1": 100,
+												"number_of_students_grade_2": 100,
+												"number_of_students_grade_3": 100,
+												"number_of_students_grade_4": 100,
+												"number_of_students_grade_5": 100,
+												"number_of_students_grade_6": 100
+											},
+											"school_facilities": {
+												"number_of_classrooms": 10,
+												"number_of_laboratories": 10,
+												"number_of_libraries": 10,
+												"number_of_sports_facilities": 10
+											},
+											"extracurriculars": [
+												{
+													"id": 1,
+													"name": "Pramuka",
+													"description": "Kegiatan Pramuka"
+												}
+											],
+											"other_information": "Other Information"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"School"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "schoolId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/attendance-tracking/attendance-report/section/{section_id}/student/{student_id}/daily": {
+			"get": {
+				"operationId": "GetAttendanceTrackingDaily",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"extra_data": {
+											"$ref": "#/components/schemas/AttendanceTrackingExtraData"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/AttendanceTrackingDaily"
+											},
+											"type": "array"
+										},
+										"previous": {
+											"type": "string"
+										},
+										"next": {
+											"type": "string"
+										},
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"message": {
+											"type": "string"
+										},
+										"error": {
+											"type": "boolean"
+										},
+										"code": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"extra_data",
+										"data",
+										"previous",
+										"next",
+										"count",
+										"message",
+										"error",
+										"code"
+									],
+									"type": "object"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"date": "2025-01-01",
+													"status": "Present"
+												}
+											],
+											"extra_data": {
+												"present_percentage": 52,
+												"leave_percentage": 44,
+												"sick_percentage": 32,
+												"absent_percentage": 44,
+												"not_present_percentage": 33.33
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Attendance Tracking Daily paginated",
+				"summary": "Get all attendance tracking daily",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Start date",
+						"in": "query",
+						"name": "start_date",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "End date",
+						"in": "query",
+						"name": "end_date",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v2/attendance-tracking/attendance-report/section/{section_id}/student/{student_id}/subject": {
+			"get": {
+				"operationId": "GetAttendanceTrackingSubject",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"extra_data": {
+											"$ref": "#/components/schemas/AttendanceTrackingExtraData"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/AttendanceTrackingSubject"
+											},
+											"type": "array"
+										},
+										"previous": {
+											"type": "string"
+										},
+										"next": {
+											"type": "string"
+										},
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"message": {
+											"type": "string"
+										},
+										"error": {
+											"type": "boolean"
+										},
+										"code": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"extra_data",
+										"data",
+										"previous",
+										"next",
+										"count",
+										"message",
+										"error",
+										"code"
+									],
+									"type": "object"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"subject": {
+														"id": 1,
+														"name": "Math"
+													},
+													"status": "Present"
+												}
+											],
+											"extra_data": {
+												"present_percentage": 52,
+												"leave_percentage": 44,
+												"sick_percentage": 32,
+												"absent_percentage": 44,
+												"not_present_percentage": 33.33
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Attendance Tracking Subject paginated",
+				"summary": "Get all attendance tracking subject",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Date",
+						"in": "query",
+						"name": "date",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v2/attendance-tracking/attendance-report/section": {
+			"get": {
+				"operationId": "GetAttendanceReport",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_AttendanceReport_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"section_id": 1,
+													"section_name": "Kelas 7A",
+													"daily_attendance_rate": 90
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Attendance Report paginated",
+				"summary": "Get all attendance report",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "academic_year_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "semester",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "course_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/attendance-tracking/attendance-report/section/{id}/student": {
+			"get": {
+				"operationId": "GetAttendanceReportStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_AttendanceReportStudent_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"student_id": 1,
+													"student_name": "Alya Putri",
+													"daily_attendance_rate": 98
+												},
+												{
+													"student_id": 2,
+													"student_name": "Faizgagah",
+													"daily_attendance_rate": 98
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get Attendance Report Student paginated",
+				"summary": "Get attendance report student",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Page number",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Number of items per page",
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Section id (required)",
+						"in": "query",
+						"name": "section_id",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/attendance-tracking/attendance-report/section/{id}/title": {
+			"get": {
+				"operationId": "GetAttendanceReportDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_AttendanceReportDetail_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": {
+												"section": {
+													"id": 1,
+													"name": "A"
+												},
+												"course": {
+													"id": 1,
+													"name": "Kelas 7"
+												},
+												"academic_year": {
+													"id": 1,
+													"academic_year": "2021-2022",
+													"start_date": "2021-01-01",
+													"end_date": "2021-12-31",
+													"semester1_start_date": "2021-01-01",
+													"semester1_end_date": "2021-06-30",
+													"semester2_start_date": "2021-07-01",
+													"semester2_end_date": "2021-12-31"
+												},
+												"semester": 1
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get Detail Attendance Report",
+				"summary": "Get detail attendance report",
+				"tags": [
+					"Attendance Tracking"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "Attendance report id",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "semester",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/registration-paths/parameter": {
+			"get": {
+				"operationId": "GetRegistrationPathParameter",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationPathCalculationParameter-Array_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": [
+												{
+													"registration_type": [
+														"1"
+													],
+													"params": [
+														"total_nilai",
+														"poin_non_akademik",
+														"umur",
+														"kustom_poin",
+														"tanggal_pendaftaran"
+													]
+												},
+												{
+													"registration_type": [
+														"0"
+													],
+													"params": [
+														"total_nilai",
+														"umur",
+														"kustom_poin",
+														"tanggal_pendaftaran"
+													]
+												},
+												{
+													"registration_type": [
+														"2",
+														"3",
+														"4"
+													],
+													"params": [
+														"umur",
+														"kustom_poin",
+														"tanggal_pendaftaran"
+													]
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get registration path calculation parameter that is used to calculate applicant priority based on their registration path type.\r\nThe order of the `params` items is important because it determines the order of the parameters in the calculation.",
+				"summary": "Get registration path calculation parameter",
+				"tags": [
+					"Registration Path Parameter"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"put": {
+				"operationId": "UpdateRegistrationPathParameter",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationPathCalculationParameter-Array_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": [
+												{
+													"registration_type": [
+														"1"
+													],
+													"params": [
+														"total_nilai",
+														"umur",
+														"tanggal_pendaftaran",
+														"kustom_poin",
+														"poin_non_akademik"
+													]
+												},
+												{
+													"registration_type": [
+														"0"
+													],
+													"params": [
+														"total_nilai",
+														"umur",
+														"tanggal_pendaftaran",
+														"kustom_poin"
+													]
+												},
+												{
+													"registration_type": [
+														"2",
+														"3",
+														"4"
+													],
+													"params": [
+														"umur",
+														"tanggal_pendaftaran",
+														"kustom_poin"
+													]
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Update registration path calculation parameter that is used to calculate applicant priority based on their registration path type.\r\nThe order of the `params` items is important because it determines the order of the parameters in the calculation.",
+				"summary": "Update registration path calculation parameter",
+				"tags": [
+					"Registration Path Parameter"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/RegistrationPathCalculationParameter"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/registration-paths": {
+			"get": {
+				"operationId": "GetRegistrationPaths",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_RegistrationPath_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"name": "Path 1",
+													"level": "0",
+													"registration_type": "1",
+													"description": "This is the first path",
+													"start_date": "2021-01-01T00:00:00Z",
+													"end_date": "2021-01-01T00:00:00Z",
+													"status": "1",
+													"is_have_payment": false
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Registration Paths paginated",
+				"summary": "Get all registration paths",
+				"tags": [
+					"Registration Path"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Array of SchoolLevel",
+						"in": "query",
+						"name": "levels",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/SchoolLevel"
+							}
+						}
+					},
+					{
+						"in": "query",
+						"name": "registration_types",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/RegistrationType"
+							}
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateRegistrationPath",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationPath_"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Duplicate Name",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DuplicateNameResponse"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Name is duplicate",
+											"data": {
+												"name": [
+													"name_is_duplicate"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new Registration Path",
+				"summary": "Create a new registration path",
+				"tags": [
+					"Registration Path"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegistrationPathPayload"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/registration-paths/{id}": {
+			"get": {
+				"operationId": "GetRegistrationPath",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationPathDetail_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": {
+												"id": 1,
+												"general": {
+													"name": "Path 1",
+													"level": "0",
+													"registration_type": "1",
+													"description": "This is the first path",
+													"start_date": "2021-01-01T00:00:00Z",
+													"end_date": "2021-01-01T00:00:00Z"
+												},
+												"configuration": [
+													{
+														"id": 1,
+														"fields": [
+															{
+																"field_type": "2",
+																"is_required": true,
+																"options": [
+																	{
+																		"id": 1,
+																		"label": "Option 1"
+																	},
+																	{
+																		"id": 2,
+																		"label": "Option 2"
+																	}
+																],
+																"ordering": 1,
+																"title": "Field 1",
+																"id": 1,
+																"is_editable": true
+															}
+														],
+														"name": "General",
+														"is_deleteable": true,
+														"is_editable": true
+													}
+												],
+												"schools": [
+													1,
+													2,
+													3,
+													4
+												],
+												"payment_config": {
+													"items": [
+														{
+															"billing_schedule_type": "1",
+															"name": "Item 1",
+															"price": 1000000,
+															"id": 1
+														}
+													],
+													"payment_methods": [
+														"BANK_TRANSFER"
+													]
+												},
+												"zone_id": null,
+												"has_applicant": false
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a Registration Path",
+				"summary": "Get a registration path",
+				"tags": [
+					"Registration Path"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateRegistrationPath",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationPath_"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a Registration Path",
+				"summary": "Update a registration path",
+				"tags": [
+					"Registration Path"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegistrationPathPayload"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteRegistrationPath",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_null_"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Registration Path already have applicants",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_null_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Registration Path already have applicants",
+											"data": null
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Delete a Registration Path",
+				"summary": "Delete a registration path",
+				"tags": [
+					"Registration Path"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/registration-paths/{registrationPathId}/registration-payments": {
+			"get": {
+				"operationId": "GetRegistrationPayment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_RegistrationPathPayment_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"billing_schedule_type": "1",
+													"student_name": "John Doe",
+													"fee_names": [
+														"Item 1"
+													],
+													"payment_amount": 1000000,
+													"payment_date": "2021-01-01T00:00:00Z",
+													"payment_method": "Bank Transfer",
+													"payment_status": "COMPLETE",
+													"transaction_code": "123456"
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Registration Payments paginated",
+				"summary": "Get all registration payments",
+				"tags": [
+					"Registration Path"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "registrationPathId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "billing_schedule_type",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/RegistrationPathBillingScheduleType"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v2/quiz/{id}": {
+			"get": {
+				"operationId": "GetQuizDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Assessment_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 113464,
+												"title": "Tes Offline Grade Desc",
+												"sections": [
+													{
+														"id": 45573,
+														"name": "B-KM",
+														"course": {
+															"id": 3539,
+															"course_name": "Kelas 7 KM Cahaya Rembulan",
+															"grade": "7"
+														}
+													},
+													{
+														"id": 45575,
+														"name": "A-KM",
+														"course": {
+															"id": 3539,
+															"course_name": "Kelas 7 KM Cahaya Rembulan",
+															"grade": "7"
+														}
+													}
+												],
+												"subject": {
+													"id": 9569,
+													"subject_name": "Bahasa Indonesia",
+													"is_elective": false
+												},
+												"is_replacement": false,
+												"is_replacement_for": null,
+												"assessment_category": "formative",
+												"semester": 1,
+												"max_replacement_score_type": "full_score",
+												"replacement_score": 100,
+												"result_post_scheduled_at": null,
+												"result_post_parts": "grade_only",
+												"assessment_type": null,
+												"is_multiple_session": false,
+												"result_post_type": "manual",
+												"instructions": "<p>lorem ipsum</p>",
+												"distribution_schedule": "publish_immediately",
+												"anticheat_enabled": false,
+												"is_auto_submission": false,
+												"question_types_shuffle_orders": [],
+												"is_question_type_shuffle": false,
+												"shuffling": false,
+												"time_limit": 0,
+												"post_to": [],
+												"opening_timestamp": "2025-06-18T06:56:14Z",
+												"closing_timestamp": "2025-06-18T06:58:00Z",
+												"multiple_sessions": [],
+												"grade_type": "Cognitive",
+												"result_display_timestamp": "",
+												"total_marks_limit": 0,
+												"total_attempts_limit": 1,
+												"is_published": true,
+												"exam_type": "1st PAS",
+												"test_type": "Chapter",
+												"submission_type": "Online",
+												"start_time": "",
+												"cheat_attempt_threshhold": 2,
+												"offline_submission_type": "grade_with_description",
+												"auto_submission_on_cheat_attempt_max_reached": false,
+												"has_camera_access": false,
+												"chapter": null,
+												"topic": null,
+												"owner": 1059886,
+												"academic_year_id": 27220,
+												"curriculum_type": "KM",
+												"has_learning_objectives": true,
+												"learning_objectives": [
+													{
+														"id": 1,
+														"code": "DEWA1",
+														"description": "This learning objective to make student can solve the easy - med math probelms",
+														"course_subject": 1,
+														"is_mapped": false,
+														"order": 1
+													},
+													{
+														"id": 2,
+														"code": "MATH2",
+														"description": "This learning objective to make student can solve the hard math probelms",
+														"course_subject": 2,
+														"is_mapped": true,
+														"order": 1
+													}
+												],
+												"has_questions_mapped_to_objectives": true
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Quiz"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/registration-detail": {
+			"post": {
+				"operationId": "AddRegistrationInformationDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationInformationDetail_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"description": "This is a test registration information detail",
+												"document": "https://example.com/registration-information-detail.pdf",
+												"registration_information": {
+													"id": 1,
+													"name": "Test Registration Information",
+													"level": "0",
+													"type": "1",
+													"quota": 50
+												},
+												"title": "Test Registration Information",
+												"type": "0"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Add registration information detail to the registration information",
+				"summary": "Add Registration Information Detail",
+				"tags": [
+					"CMS",
+					"Registration Information"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"registration_information": {
+										"type": "string",
+										"description": "ID of the registration information"
+									},
+									"type": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"document": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"registration_information",
+									"type",
+									"description"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/registration-detail/{id}": {
+			"patch": {
+				"operationId": "UpdateRegistrationInformationDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationInformationDetail_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"description": "This is a test registration information detail",
+												"document": "https://example.com/registration-information-detail.pdf",
+												"registration_information": {
+													"id": 1,
+													"name": "Test Registration Information",
+													"level": "0",
+													"type": "1",
+													"quota": 50
+												},
+												"title": "Test Registration Information",
+												"type": "0"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Update registration information detail",
+				"summary": "Update Registration Information Detail",
+				"tags": [
+					"CMS",
+					"Registration Information"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"registration_information": {
+										"type": "string",
+										"description": "ID of the registration information"
+									},
+									"type": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"document": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"registration_information",
+									"type",
+									"description"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/registration-information": {
+			"get": {
+				"operationId": "GetRegistrationInformation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_RegistrationInformation_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"name": "Test Registration Information",
+													"level": "0",
+													"type": "0",
+													"quota": 50
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get Path Registration Informations list",
+				"summary": "Get Registration Information list",
+				"tags": [
+					"CMS",
+					"Registration Information"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateRegistrationInformation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationInformation_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"name": "Test Registration Information",
+												"level": "0",
+												"type": "0",
+												"quota": 50
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Duplicate Name",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DuplicateTitleResponse"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Name is duplicate",
+											"data": {
+												"name": [
+													"name_is_duplicate"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Create Path Registration Information",
+				"summary": "Create Registration Information",
+				"tags": [
+					"CMS",
+					"Registration Information"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_RegistrationInformation.id_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/registration-information/{id}": {
+			"get": {
+				"operationId": "GetRegistrationInformationById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationInformationWithDetails_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"name": "Test Registration Information",
+												"level": "0",
+												"type": "0",
+												"registration_details": [
+													{
+														"id": 1,
+														"registration_information": {
+															"id": 1,
+															"name": "Test Registration Information",
+															"level": "0",
+															"type": "0",
+															"quota": 50
+														},
+														"type": "0",
+														"title": "Syarat Pendaftaran",
+														"description": "This is a test registration information",
+														"document": "https://example.com/registration-information.jpg"
+													}
+												],
+												"quota": 50
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get Path Registration Information by ID",
+				"summary": "Get Registration Information by ID",
+				"tags": [
+					"CMS",
+					"Registration Information"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateRegistrationInformation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_RegistrationInformation_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"name": "Test Registration Information",
+												"level": "0",
+												"type": "0",
+												"quota": 50
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Update Path Registration Information",
+				"summary": "Update Registration Information",
+				"tags": [
+					"CMS",
+					"Registration Information"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_RegistrationInformation.id_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/general-information": {
+			"get": {
+				"operationId": "GetGeneralInformation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_GeneralInformation-or-null_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test General Information",
+												"description": "This is a test general information",
+												"picture": "https://example.com/general-information.jpg"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get PPDB General Information",
+				"summary": "Get General Information",
+				"tags": [
+					"CMS",
+					"General Information"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveGeneralInformation",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_GeneralInformation_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test General Information",
+												"description": "This is a test general information",
+												"picture": "https://example.com/general-information.jpg"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError_GeneralInformation_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Validation Error",
+											"data": {
+												"title": [
+													"Title is required"
+												],
+												"description": [
+													"Description is required"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Submit PPDB General Information",
+				"summary": "Submit General Information",
+				"tags": [
+					"CMS",
+					"General Information"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"picture": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"description",
+									"picture"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/faqs": {
+			"get": {
+				"operationId": "GetFaqs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_FAQ_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"title": "Test Question",
+													"description": "This is a test question"
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get list of FAQs paginated",
+				"summary": "Get FAQs",
+				"tags": [
+					"CMS",
+					"FAQs"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "AddFaqs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_FAQ_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test Question",
+												"description": "This is a test question"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError_FAQ_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Validation Error",
+											"data": {
+												"title": [
+													"Title is required"
+												],
+												"description": [
+													"Description is required"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Add a new FAQ",
+				"summary": "Add FAQ",
+				"tags": [
+					"CMS",
+					"FAQs"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_FAQ.id_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/faqs/{id}": {
+			"get": {
+				"operationId": "GetFaq",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_FAQ_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test Question",
+												"description": "This is a test question"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a FAQ by ID",
+				"summary": "Get FAQ",
+				"tags": [
+					"CMS",
+					"FAQs"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateFaq",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_FAQ_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test Question",
+												"description": "This is a test question"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError_FAQ_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Validation Error",
+											"data": {
+												"title": [
+													"Title is required"
+												],
+												"description": [
+													"Description is required"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a FAQ by ID",
+				"summary": "Update FAQ",
+				"tags": [
+					"CMS",
+					"FAQs"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_FAQ.id_"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteFaq",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_null_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": null
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Delete a FAQ by ID",
+				"summary": "Delete FAQ",
+				"tags": [
+					"CMS",
+					"FAQs"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/contacts": {
+			"get": {
+				"operationId": "GetContacts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_ContactInfo_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"address": "Jl. Raya Ciputat Parung No. 1, Ciputat, Tangerang Selatan",
+												"email": "ppdb@example.com",
+												"phone": "021-123456",
+												"alternative_phone": "08123456789",
+												"other_phone": "08123456789",
+												"whatsapp": "628123456789",
+												"instagram": "https://instagram.com/ppdb",
+												"facebook": "https://facebook.com/ppdb",
+												"website": "https://www.ppdb.com"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get PPDB Contact Information",
+				"summary": "Get Contact Information",
+				"tags": [
+					"CMS",
+					"Contact"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveContacts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_ContactInfo_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"address": "Jl. Raya Ciputat Parung No. 1, Ciputat, Tangerang Selatan",
+												"email": "ppdb@example.com",
+												"phone": "021-123456",
+												"alternative_phone": "08123456789",
+												"other_phone": "08123456789",
+												"whatsapp": "628123456789",
+												"instagram": "https://instagram.com/ppdb",
+												"facebook": "https://facebook.com/ppdb",
+												"website": "https://www.ppdb.com"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Save PPDB Contact Information",
+				"summary": "Save Contact Information",
+				"tags": [
+					"CMS",
+					"Contact"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ContactInfo"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/banner": {
+			"get": {
+				"operationId": "GetBanner",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Banner-or-null_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test Banner",
+												"description": "This is a test banner",
+												"picture": "https://example.com/banner.jpg"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get PPDB Banner",
+				"summary": "Get Banner",
+				"tags": [
+					"CMS",
+					"Banner"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateBanner",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Banner_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test Banner",
+												"description": "This is a test banner",
+												"picture": "https://example.com/banner.jpg"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Banner already exist",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope__banner_duplicated-string__"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 403,
+											"error": true,
+											"message": "Only one banner allowed on each province/city/foundation and school level (Elementary School, Middle School, High School)",
+											"data": {
+												"banner_duplicated": "Only one banner allowed on each province/city/foundation and school level (Elementary School, Middle School, High School)"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a PPDB Banner, will return an error if a banner is already exist",
+				"summary": "Create Banner",
+				"tags": [
+					"CMS",
+					"Banner"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"picture": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"description",
+									"picture"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/banner/{id}": {
+			"patch": {
+				"operationId": "UpdateBanner",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Banner_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"title": "Test Banner",
+												"description": "This is a test banner",
+												"picture": "https://example.com/banner.jpg"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a PPDB Banner",
+				"summary": "Update Banner",
+				"tags": [
+					"CMS",
+					"Banner"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"picture": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"description",
+									"picture"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/auth/user/{id}": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_GetDetailUser_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "",
+											"data": {
+												"id": 1,
+												"first_name": "John",
+												"last_name": "Doe"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get user detail",
+				"summary": "Get user detail by id",
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"description": "User id",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/v2/ppdb/announcements": {
+			"get": {
+				"operationId": "GetAnnouncements",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedResponseEnvelope_Announcement_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"count": 100,
+											"next": "",
+											"previous": "",
+											"data": [
+												{
+													"id": 1,
+													"title": "Announcement 1",
+													"description": "This is the first announcement",
+													"file": "announcement1.pdf",
+													"created_at": "2021-01-01T00:00:00Z",
+													"updated_at": "2021-01-01T00:00:00Z",
+													"created_by": "admin"
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get All Announcements paginated",
+				"summary": "Get all announcements",
+				"tags": [
+					"Announcement"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateAnnouncement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Announcement_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": {
+												"id": 1,
+												"title": "Announcement 1",
+												"description": "This is the first announcement",
+												"file": "announcement1.pdf",
+												"created_at": "2021-01-01T00:00:00Z",
+												"updated_at": "2021-01-01T00:00:00Z",
+												"created_by": "admin"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Duplicate Title",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError_AnnouncementPayload_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Validation Error",
+											"data": {
+												"title": [
+													"Title is required"
+												],
+												"description": [
+													"Description is required"
+												]
+											}
+										}
+									},
+									"Example 2": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Title is duplicate",
+											"data": {}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"summary": "Create an announcement",
+				"tags": [
+					"Announcement"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"file": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"description"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/ppdb/announcements/{id}": {
+			"get": {
+				"operationId": "GetAnnouncement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Announcement_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": {
+												"id": 1,
+												"title": "Announcement 1",
+												"description": "This is the first announcement",
+												"file": "announcement1.pdf",
+												"created_at": "2021-01-01T00:00:00Z",
+												"updated_at": "2021-01-01T00:00:00Z",
+												"created_by": "admin"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"summary": "Get an announcement",
+				"tags": [
+					"Announcement"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateAnnouncement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_Announcement_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": {
+												"id": 1,
+												"title": "Announcement 1",
+												"description": "This is the first announcement",
+												"file": "announcement1.pdf",
+												"created_at": "2021-01-01T00:00:00Z",
+												"updated_at": "2021-01-01T00:00:00Z",
+												"created_by": "admin"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError_AnnouncementPayload_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Validation Error",
+											"data": {
+												"title": [
+													"Title is required"
+												],
+												"description": [
+													"Description is required"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"summary": "Update an announcement",
+				"tags": [
+					"Announcement"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"file": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"title",
+									"description"
+								]
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteAnnouncement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_null_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 200,
+											"error": false,
+											"message": "Success",
+											"data": null
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Announcement"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
