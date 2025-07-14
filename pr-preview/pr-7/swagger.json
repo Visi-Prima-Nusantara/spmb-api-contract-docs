@@ -1903,14 +1903,7 @@
 					"description": {
 						"type": "string"
 					},
-					"course_subject": {
-						"type": "number",
-						"format": "double"
-					},
-					"is_mapped": {
-						"type": "boolean"
-					},
-					"order": {
+					"max_score": {
 						"type": "number",
 						"format": "double"
 					}
@@ -1919,9 +1912,7 @@
 					"id",
 					"code",
 					"description",
-					"course_subject",
-					"is_mapped",
-					"order"
+					"max_score"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -5263,17 +5254,13 @@
 														"id": 1,
 														"code": "DEWA1",
 														"description": "This learning objective to make student can solve the easy - med math probelms",
-														"course_subject": 1,
-														"is_mapped": false,
-														"order": 1
+														"max_score": 50
 													},
 													{
 														"id": 2,
 														"code": "MATH2",
 														"description": "This learning objective to make student can solve the hard math probelms",
-														"course_subject": 2,
-														"is_mapped": true,
-														"order": 1
+														"max_score": 70
 													}
 												],
 												"has_questions_mapped_to_objectives": true
