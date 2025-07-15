@@ -2475,6 +2475,115 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"CreateLearningObjectivePayload": {
+				"properties": {
+					"quiz_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"student_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"scores": {
+						"items": {
+							"properties": {
+								"objective_score": {
+									"type": "number",
+									"format": "double"
+								},
+								"score": {
+									"type": "number",
+									"format": "double"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"objective_score",
+								"score",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"quiz_id",
+					"student_id",
+					"scores"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResponseEnvelope_CreateLearningObjectivePayload_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double",
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"$ref": "#/components/schemas/CreateLearningObjectivePayload"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ValidationError_CreateLearningObjectivePayload_": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"enum": [
+							400
+						],
+						"nullable": false,
+						"description": "HTTP Response code"
+					},
+					"error": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false,
+						"description": "Error flag"
+					},
+					"message": {
+						"type": "string",
+						"description": "Message"
+					},
+					"data": {
+						"properties": {},
+						"type": "object",
+						"description": "Key value pair of field and error messages"
+					}
+				},
+				"required": [
+					"code",
+					"error",
+					"message",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"RegistrationInformation": {
 				"properties": {
 					"id": {
@@ -5287,6 +5396,93 @@
 						}
 					}
 				]
+			}
+		},
+		"/api/v2/learning-objectives/score": {
+			"post": {
+				"operationId": "AddLearningObjectiveScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseEnvelope_CreateLearningObjectivePayload_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 201,
+											"data": {
+												"quiz_id": 120,
+												"scores": [
+													{
+														"id": 12,
+														"score": 80,
+														"objective_score": 60
+													},
+													{
+														"id": 13,
+														"score": 70,
+														"objective_score": 50
+													}
+												],
+												"student_id": 90290
+											},
+											"error": false,
+											"message": "Learning objective score created successfully"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError_CreateLearningObjectivePayload_"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"code": 400,
+											"error": true,
+											"message": "Validation Error",
+											"data": {
+												"quiz_id": [
+													"Quiz ID is required"
+												],
+												"student_id": [
+													"Student ID is required"
+												],
+												"scores": [
+													"Scores is required"
+												]
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Learning Objectives"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateLearningObjectivePayload"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/v2/ppdb/registration-detail": {
