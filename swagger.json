@@ -5463,7 +5463,39 @@
 				]
 			}
 		},
-		"/api/v2/learning-objectives/score": {
+		"/api/v2/learning-objective/export": {
+			"get": {
+				"operationId": "ExportLearningObjectiveScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Learning Objective"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "quiz_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v2/learning-objective/score": {
 			"get": {
 				"operationId": "GetLearningObjectiveScore",
 				"responses": {
@@ -5506,7 +5538,7 @@
 					}
 				},
 				"tags": [
-					"Learning Objectives"
+					"Learning Objective"
 				],
 				"security": [],
 				"parameters": [
@@ -5600,7 +5632,7 @@
 					}
 				},
 				"tags": [
-					"Learning Objectives"
+					"Learning Objective"
 				],
 				"security": [],
 				"parameters": [],
