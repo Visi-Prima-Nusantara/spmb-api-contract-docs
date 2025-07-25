@@ -5470,15 +5470,17 @@
 					"200": {
 						"description": "Ok",
 						"content": {
-							"application/vnd.ms-excel": {
+							"application/json": {
 								"schema": {
-									"type": "string",
-									"format": "byte"
+									"type": "string"
 								}
 							}
 						}
 					}
 				},
+				"tags": [
+					"Learning Objective"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -5535,6 +5537,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Learning Objective"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -5626,6 +5631,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Learning Objective"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
